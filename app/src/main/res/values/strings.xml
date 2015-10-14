@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Barathon</string>
 
-    <string name="hello_world">Hello world!</string>
+    <string name="barathon">Barathon</string>
     <string name="action_settings">Settings</string>
+
+    <string name="action_showMap">Voir la carte des bars</string>
 </resources>

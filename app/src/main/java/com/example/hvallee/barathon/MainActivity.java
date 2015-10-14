@@ -1,9 +1,12 @@
 package com.example.hvallee.barathon;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,5 +36,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showMap(View view) {
+
+        // creation d'un intent pour appeler une autre activité (SecondaryActivity)
+        Intent intent = new Intent(getApplicationContext(), MapActivity.class);
+
+        //lancement de la seconde activité
+        startActivity(intent);
     }
 }
