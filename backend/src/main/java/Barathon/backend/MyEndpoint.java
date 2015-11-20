@@ -21,7 +21,7 @@ import javax.inject.Named;
         namespace = @ApiNamespace(
                 ownerDomain = "backend.Barathon",
                 ownerName = "backend.Barathon",
-                packagePath = ""
+                packagePath = "bar"
         )
 )
 public class MyEndpoint {
@@ -36,5 +36,12 @@ public class MyEndpoint {
 
         return response;
     }
+    @ApiMethod()
+    public getOneBar(){
+        MyBean response = new MyBean();
+        response response = new MyBean();
+        return response;
+    }
+
 
 }
