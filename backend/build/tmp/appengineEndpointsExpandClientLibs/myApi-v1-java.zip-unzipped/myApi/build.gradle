@@ -3,7 +3,7 @@ apply plugin: 'maven'
 
 
 group = 'barathon.backend'
-archivesBaseName = 'myApi'
+archivesBaseName = 'bar-myapi'
 version = 'v1-1.20.0-SNAPSHOT'
 
 sourceCompatibility = 1.6

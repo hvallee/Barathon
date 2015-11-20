@@ -10,7 +10,7 @@
     tools:showIn="@layout/activity_list_bar"
     tools:context="com.example.hvallee.barathon.ListBarActivity">
 
-    <ListView
+    <ListView android:id="@android:id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></ListView>
 
