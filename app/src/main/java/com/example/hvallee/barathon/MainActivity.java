@@ -31,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_listeBars) {
+            Intent intent = new Intent(getApplicationContext(), ListBarActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

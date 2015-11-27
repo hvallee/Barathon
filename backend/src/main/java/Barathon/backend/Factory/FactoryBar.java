@@ -1,6 +1,8 @@
 package Barathon.backend.Factory;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 import Barathon.backend.Model.Bar;
 
@@ -18,5 +20,13 @@ public class FactoryBar {
 
     public static Bar getOneBar(){
         return b_petit_velo;
+    }
+
+    public static List<Bar> getBars(){
+        List<Bar> listB = new ArrayList<Bar>();
+        listB.add(b_petit_velo);
+        listB.add(b_tio_paquito);
+        listB.add(b_lesquinade);
+        return listB;
     }
 }
