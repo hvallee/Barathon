@@ -11,6 +11,8 @@ import com.google.api.server.spi.config.ApiNamespace;
 import java.util.List;
 
 import Barathon.backend.Factory.FactoryBar;
+import Barathon.backend.GoogleData.GoogleBars;
+
 import Barathon.backend.Model.Bar;
 
 /**
@@ -33,7 +35,8 @@ public class BarEndPoint {
 
     @ApiMethod(name = "bars")
     public List<Bar> getBars(){
-        return FactoryBar.getBars();
+        GoogleBars gb = new GoogleBars();
+        return gb.getBars();
     }
 
 }
