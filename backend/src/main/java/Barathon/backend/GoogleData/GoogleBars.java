@@ -134,15 +134,13 @@ public class GoogleBars {
     public List<Bar> getBars() {
         GoogleBars http = new GoogleBars();
         List<Bar> bars = new ArrayList<>();
-        System.out.println("Testing 1 - Send Http GET request");
+
         try {
             bars = http.sendGet();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        System.out.println("\nTesting 2 - Send Http POST request");
-        //  http.sendPost();
         return bars;
     }
 }
