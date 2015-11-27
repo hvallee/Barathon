@@ -8,4 +8,6 @@
         android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_barathon" android:title="@string/barathon"
         android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_refresh_data" android:title="@string/refresh"
+        android:orderInCategory="100" app:showAsAction="never" />
 </menu>
