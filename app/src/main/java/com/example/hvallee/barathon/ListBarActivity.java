@@ -1,18 +1,8 @@
 package com.example.hvallee.barathon;
 
 import android.app.ListActivity;
-import android.content.Context;
 import android.os.Bundle;
-import android.provider.Contacts;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SimpleCursorAdapter;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -20,7 +10,6 @@ import com.example.hvallee.barathon.Adapter.ListBarAdapter;
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListBarActivity extends ListActivity {
