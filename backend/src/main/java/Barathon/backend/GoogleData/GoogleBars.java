@@ -1,15 +1,20 @@
 package Barathon.backend.GoogleData;
 
-import com.google.appengine.repackaged.com.google.api.client.json.Json;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import Barathon.backend.Model.Bar;
 
 
 /**
@@ -32,7 +37,7 @@ public class GoogleBars {
     }
 
     // HTTP GET request
-    private void sendGet() throws Exception {
+    private List<Bar> sendGet() throws Exception {
 
         String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=bar+rennes&key=AIzaSyD3ZVV7dO2a8cU9UUsC9ubYTky994DWhPo";
 
@@ -55,19 +60,35 @@ public class GoogleBars {
         StringBuffer response = new StringBuffer();
 
         while ((inputLine = in.readLine()) != null) {
-            System.out.println(inputLine);
+
             response.append(inputLine);
         }
+        System.out.println(response);
+
+        List<Bar> bars = new ArrayList<>();
+        JSONObject data = new JSONObject(response.toString());
+        JSONArray arr = data.getJSONArray("results");
+        for (int i = 0; i < arr.length(); i++)
+        {
+            String address = arr.getJSONObject(i).getString("formatted_address");
+            String name = arr.getJSONObject(i).getString("name");
+            String latitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
+            String longitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
+
+            JSONObject jo = new JSONObject();
+            jo.put("id", i);
+            jo.put("address", address);
+            jo.put("name", name);
+            jo.put("latitude", latitude);
+            jo.put("longitude", longitude);
+            jo.put("phone", "");
+            Bar bar = new Bar(i, name, address, "", latitude, longitude);
+            bars.add(bar);
+        }
         in.close();
-
-        //print result
-        System.out.println(response.toString());
-
+        return bars;
     }
 
-    private void formatBars(Json data) {
-
-    }
 
     // HTTP POST request
     private void sendPost() throws Exception {
@@ -106,7 +127,22 @@ public class GoogleBars {
         in.close();
 
         //print result
-        System.out.println(response.toString());
+       // System.out.println(response.toString());
 
+    }
+
+    public List<Bar> getBars() {
+        GoogleBars http = new GoogleBars();
+        List<Bar> bars = new ArrayList<>();
+        System.out.println("Testing 1 - Send Http GET request");
+        try {
+            bars = http.sendGet();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.println("\nTesting 2 - Send Http POST request");
+        //  http.sendPost();
+        return bars;
     }
 }
