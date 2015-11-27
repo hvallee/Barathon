@@ -19,11 +19,11 @@ public class ListBarActivity2 extends ListActivity {
 
         // We'll define a custom screen layout here (the one shown above), but
         // typically, you could just use the standard ListActivity layout.
-        setContentView(R.layout.content_list_bar);
+        setContentView(R.layout.activity_main);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
+       // ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, mStrings);
 
-        setListAdapter(adapter);
+        //setListAdapter(adapter);
 
     }
 }

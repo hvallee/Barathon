@@ -8,4 +8,9 @@
     <string name="action_showList">Voir la liste des bars</string>
 
     <string name="title_activity_list_bar">ListBarActivity</string>
+
+    <string name="listeBars">Liste Bars</string>
+    <string name="aroundMe">Autour de moi</string>
+
+
 </resources>
