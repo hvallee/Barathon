@@ -97,6 +97,16 @@ public class BarsDataSource {
         return bars;
     }
 
+    public Bar getBar(int id) {
+        Bar bar;
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,allColumns, MySQLiteHelper.COLUMN_ID
+                + " = " + id,null,null,null,null);
+        while (!cursor.isAfterLast()) {
+            return cursorToBar(cursor);
+        }
+        return null;
+    }
+
     private Bar cursorToBar(Cursor cursor) {
         // Création d'un nouveau bar à partir du cursor
         Bar bar = new Bar(cursor.getLong(0),
