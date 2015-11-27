@@ -4,10 +4,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
 import com.example.hvallee.barathon.R;
 
@@ -17,7 +17,6 @@ import java.util.List;
  * Created by yoannlt on 27/11/2015.
  */
 public class ListBarAdapter extends BaseAdapter {
-
 
     private final String LOG_TAG = ListBarAdapter.class.getSimpleName();
 
@@ -60,7 +59,7 @@ public class ListBarAdapter extends BaseAdapter {
 
         setId(mListBars.get(position).getId());
 
-        return null;
+        return row;
     }
 
     private static class MyViewHolder {

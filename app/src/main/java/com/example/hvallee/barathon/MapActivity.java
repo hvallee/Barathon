@@ -23,12 +23,12 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        /*
+
         dataSource = new BarsDataSource(this);
         dataSource.open();
         dataSource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
         dataSource.close();
-        */
+
     }
 
     @Override

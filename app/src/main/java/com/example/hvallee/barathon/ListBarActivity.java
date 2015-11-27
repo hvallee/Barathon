@@ -17,14 +17,17 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.hvallee.barathon.Adapter.ListBarAdapter;
+import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListBarActivity extends ListActivity {
 
     private ListBarAdapter adapter;
-    private ArrayList bars;
+    private List<Bar> bars;
+    private BarsDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +36,14 @@ public class ListBarActivity extends ListActivity {
         // typically, you could just use the standard ListActivity layout.
         setContentView(R.layout.activity_list_bar);
 
+        dataSource = new BarsDataSource(this);
+        dataSource.open();
+        bars = dataSource.getAllBars();
+        dataSource.close();
+
         adapter = new ListBarAdapter(bars, this);
 
-        // Bind to our new adapter.
+        // Bind to our new adapter
         setListAdapter(adapter);
     }
 
