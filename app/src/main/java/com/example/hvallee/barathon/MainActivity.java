@@ -46,4 +46,9 @@ public class MainActivity extends AppCompatActivity {
         //lancement de la seconde activité
         startActivity(intent);
     }
+
+    public void showList(View view) {
+        Intent intent = new Intent(getApplicationContext(), ListBarActivity.class);
+        startActivity(intent);
+    }
 }

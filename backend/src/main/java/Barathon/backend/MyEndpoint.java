@@ -36,12 +36,13 @@ public class MyEndpoint {
 
         return response;
     }
+    /*
     @ApiMethod()
     public getOneBar(){
         MyBean response = new MyBean();
         response response = new MyBean();
         return response;
     }
-
+    */
 
 }
