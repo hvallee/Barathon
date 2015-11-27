@@ -5,8 +5,8 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>Barathon.backend.MyEndpoint</param-value>
-        </init-param>
+            <param-value>Barathon.backend.MyEndpoint, Barathon.backend.BarEndPoint</param-value>
+</init-param>
     </servlet>
     <servlet-mapping>
         <servlet-name>SystemServiceServlet</servlet-name>
