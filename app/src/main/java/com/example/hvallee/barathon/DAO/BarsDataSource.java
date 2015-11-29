@@ -97,15 +97,29 @@ public class BarsDataSource {
         return bars;
     }
 
-    public Bar getBar(int id) {
-        Bar bar;
+    public Bar getBarById(int id) {
+        Bar bar = null;
         Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,allColumns, MySQLiteHelper.COLUMN_ID
-                + " = " + id,null,null,null,null);
-        while (!cursor.isAfterLast()) {
-            return cursorToBar(cursor);
+                + " = " + id,null,null,null,null,null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            bar = cursorToBar(cursor);
         }
-        return null;
+        return bar;
     }
+
+    public Bar getBarByName(String name) {
+        Bar bar = null;
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,allColumns, MySQLiteHelper.COLUMN_NAME
+                + " = '" + name + "'",null,null,null,null,null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            bar = cursorToBar(cursor);
+        }
+        return bar;
+    }
+
+
 
     private Bar cursorToBar(Cursor cursor) {
         // Création d'un nouveau bar à partir du cursor
