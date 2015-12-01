@@ -1,5 +1,7 @@
 package Barathon.backend.Model;
 
+import java.util.ArrayList;
+
 /**
  * Created by samyabh on 19/10/2015.
  */
@@ -70,4 +72,15 @@ public class Bar {
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
+
+
+    public static ArrayList<Bar> getAListOfPersonne() {
+        ArrayList<Bar> listPers = new ArrayList<Bar>();
+
+        listPers.add(new Bar(1, "bar1", "1 rue du bar", "0202020202", "48.1125389","-1.6831857"));
+        listPers.add(new Bar(2, "bar2", "2 rue du bar", "0202020201", "48.1133397","-1.68406"));
+
+        return listPers;
+    }
+
 }

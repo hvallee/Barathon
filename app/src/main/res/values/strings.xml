@@ -13,4 +13,7 @@
     <string name="aroundMe">Autour de moi</string>
 
     <string name="refresh">Refresh</string>
+    <string name="title_activity_bar_details">BarDetails</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

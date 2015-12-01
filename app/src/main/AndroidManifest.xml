@@ -36,6 +36,10 @@
             android:label="@string/title_activity_list_bar"
             android:theme="@style/AppTheme.NoActionBar" >
         </activity>
+        <activity
+            android:name=".BarDetails"
+            android:label="@string/title_activity_bar_details" >
+        </activity>
     </application>
 
 </manifest>
