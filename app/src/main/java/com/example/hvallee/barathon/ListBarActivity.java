@@ -1,10 +1,7 @@
 package com.example.hvallee.barathon;
 
 import android.app.ListActivity;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -12,15 +9,8 @@ import android.widget.Toast;
 import com.example.hvallee.barathon.Adapter.ListBarAdapter;
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
-import com.google.api.client.extensions.android.http.AndroidHttp;
-import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
-import java.io.IOException;
 import java.util.List;
-
-import barathon.backend.myApi.MyApi;
 
 public class ListBarActivity extends ListActivity {
 

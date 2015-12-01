@@ -1,15 +1,13 @@
 package com.example.hvallee.barathon;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Pair;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
@@ -21,6 +19,8 @@ import java.io.IOException;
 import barathon.backend.myApi.MyApi;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final static String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,19 +68,19 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+    private class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
         private MyApi myApiService = null;
-        private Context context;
+        //private Context context;
 
         @Override
-        protected String doInBackground(Pair<Context, String>... params) {
+        protected String doInBackground(Void... params) {
             if(myApiService == null) {  // Only do this once
                 MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                         new AndroidJsonFactory(), null)
                         // options for running against local devappserver
                         // - 10.0.2.2 is localhost's IP address in Android emulator
                         // - turn off compression when running against local devappserver
-                        .setRootUrl("http://localhost:8080/_ah/api/apiBar/v1/barcollection")
+                        .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                         .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                             @Override
                             public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -92,11 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 myApiService = builder.build();
             }
 
-            context = params[0].first;
-            String name = params[0].second;
-
             try {
-                return myApiService.sayHi(name).execute().getData();
+                return myApiService.bars().execute().getData();
             } catch (IOException e) {
                 return e.getMessage();
             }
@@ -104,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+            Log.d(LOG_TAG, result);
+            //Toast.makeText(context, result, Toast.LENGTH_LONG).show();
         }
     }
 }
