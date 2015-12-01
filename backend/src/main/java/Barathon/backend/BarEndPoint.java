@@ -38,5 +38,4 @@ public class BarEndPoint {
         GoogleBars gb = new GoogleBars();
         return gb.getBars();
     }
-
 }

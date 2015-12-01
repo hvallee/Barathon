@@ -10,7 +10,12 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 
+import java.util.List;
+
 import javax.inject.Named;
+
+import Barathon.backend.GoogleData.GoogleBars;
+import Barathon.backend.Model.Bar;
 
 /**
  * An endpoint class we are exposing
@@ -37,5 +42,20 @@ public class MyEndpoint {
         return response;
     }
 
+    @ApiMethod(name = "bars")
+    public MyBean getBars(){
+        MyBean response = new MyBean();
+        GoogleBars gb = new GoogleBars();
 
+        List<Bar> listBar = gb.getBars();
+        int i = 0;
+        String resultBars = "";
+        while(i<listBar.size()){
+            resultBars+=listBar.get(i);
+            i++;
+        }
+
+        response.setData(resultBars);
+        return response;
+    }
 }
