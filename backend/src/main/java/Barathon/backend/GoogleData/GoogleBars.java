@@ -28,18 +28,11 @@ public class GoogleBars {
 
         GoogleBars http = new GoogleBars();
 
-        System.out.println("Testing 1 - Send Http GET request");
-        http.sendGet();
-
-        System.out.println("\nTesting 2 - Send Http POST request");
-      //  http.sendPost();
-
     }
 
     // HTTP GET request
-    private List<Bar> sendGet() throws Exception {
+    private String sendGet(String url) throws Exception {
 
-        String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=bar+rennes&key=AIzaSyD3ZVV7dO2a8cU9UUsC9ubYTky994DWhPo";
 
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -63,30 +56,9 @@ public class GoogleBars {
 
             response.append(inputLine);
         }
-        System.out.println(response);
 
-        List<Bar> bars = new ArrayList<>();
-        JSONObject data = new JSONObject(response.toString());
-        JSONArray arr = data.getJSONArray("results");
-        for (int i = 0; i < arr.length(); i++)
-        {
-            String address = arr.getJSONObject(i).getString("formatted_address");
-            String name = arr.getJSONObject(i).getString("name");
-            String latitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
-            String longitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
-
-            JSONObject jo = new JSONObject();
-            jo.put("id", i);
-            jo.put("address", address);
-            jo.put("name", name);
-            jo.put("latitude", latitude);
-            jo.put("longitude", longitude);
-            jo.put("phone", "");
-            Bar bar = new Bar(i, name, address, "", latitude, longitude);
-            bars.add(bar);
-        }
         in.close();
-        return bars;
+        return response.toString();
     }
 
 
@@ -132,13 +104,61 @@ public class GoogleBars {
     }
 
     public List<Bar> getBars() {
-        GoogleBars http = new GoogleBars();
-        List<Bar> bars = new ArrayList<>();
+        GoogleBars googleBars = new GoogleBars();
+        ArrayList bars = new ArrayList();
+        String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=bar+rennes&key=AIzaSyD3ZVV7dO2a8cU9UUsC9ubYTky994DWhPo";
 
         try {
-            bars = http.sendGet();
-        } catch (Exception e) {
-            e.printStackTrace();
+            String e = googleBars.sendGet(url);
+            JSONObject data = new JSONObject(e);
+            JSONArray arr = data.getJSONArray("results");
+
+            String result2;
+            String page3;
+            for(int page2 = 0; page2 < arr.length(); ++page2) {
+                result2 = arr.getJSONObject(page2).getString("formatted_address");
+                String data2 = arr.getJSONObject(page2).getString("name");
+                String arr2 = arr.getJSONObject(page2).getJSONObject("geometry").getJSONObject("location").getString("lat");
+                page3 = arr.getJSONObject(page2).getJSONObject("geometry").getJSONObject("location").getString("lng");
+                Bar result3 = new Bar((long)page2, data2, result2, "", arr2, page3);
+                bars.add(result3);
+            }
+
+            String var22 = data.getString("next_page_token");
+            Thread.sleep(2000L);
+            result2 = googleBars.sendGet(url + "&pagetoken=" + var22);
+            JSONObject var23 = new JSONObject(result2);
+            JSONArray var25 = var23.getJSONArray("results");
+
+            String var26;
+            for(int var24 = 0; var24 < var25.length(); ++var24) {
+                var26 = var25.getJSONObject(var24).getString("formatted_address");
+                String data3 = var25.getJSONObject(var24).getString("name");
+                String arr3 = var25.getJSONObject(var24).getJSONObject("geometry").getJSONObject("location").getString("lat");
+                String i = var25.getJSONObject(var24).getJSONObject("geometry").getJSONObject("location").getString("lng");
+                Bar address = new Bar((long)var24, data3, var26, "", arr3, i);
+                bars.add(address);
+            }
+
+            page3 = var23.getString("next_page_token");
+            System.out.println(page3);
+            Thread.sleep(2000L);
+            var26 = googleBars.sendGet(url + "&pagetoken=" + page3);
+            JSONObject var27 = new JSONObject(var26);
+            JSONArray var29 = var27.getJSONArray("results");
+
+            for(int var28 = 0; var28 < var29.length(); ++var28) {
+                String var30 = var29.getJSONObject(var28).getString("formatted_address");
+                String name = var29.getJSONObject(var28).getString("name");
+                String latitude = var29.getJSONObject(var28).getJSONObject("geometry").getJSONObject("location").getString("lat");
+                String longitude = var29.getJSONObject(var28).getJSONObject("geometry").getJSONObject("location").getString("lng");
+                Bar bar = new Bar((long)var28, name, var30, "", latitude, longitude);
+                bars.add(bar);
+            }
+
+            System.out.println(bars);
+        } catch (Exception var21) {
+            var21.printStackTrace();
         }
 
         return bars;
