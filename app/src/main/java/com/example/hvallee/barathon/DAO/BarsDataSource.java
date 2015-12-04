@@ -101,8 +101,7 @@ public class BarsDataSource {
         Bar bar = null;
         Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,allColumns, MySQLiteHelper.COLUMN_ID
                 + " = " + id,null,null,null,null,null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             bar = cursorToBar(cursor);
         }
         return bar;
@@ -111,15 +110,12 @@ public class BarsDataSource {
     public Bar getBarByName(String name) {
         Bar bar = null;
         Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,allColumns, MySQLiteHelper.COLUMN_NAME
-                + " = '" + name + "'",null,null,null,null,null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+                + " = \"" + name + "\"",null,null,null,null,null);
+        if (cursor.moveToFirst()) {
             bar = cursorToBar(cursor);
         }
         return bar;
     }
-
-
 
     private Bar cursorToBar(Cursor cursor) {
         // Création d'un nouveau bar à partir du cursor

@@ -9,6 +9,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.hvallee.barathon.DAO.BarsDataSource;
+import com.example.hvallee.barathon.Model.Bar;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
@@ -16,16 +18,23 @@ import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
 import barathon.backend.myApi.MyApi;
 
 public class MainActivity extends AppCompatActivity {
 
     private final static String LOG_TAG = MainActivity.class.getSimpleName();
+    private BarsDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        dataSource = new BarsDataSource(getApplication());
+        dataSource.open();
     }
 
     @Override
@@ -101,8 +110,42 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            Log.d(LOG_TAG, result);
-            //Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+            updateDatabase(result);
+        }
+    }
+
+    /*
+    String data : les données des bars au format JSON
+     */
+    private void updateDatabase(String response) {
+        Log.d("Reponse server :", response);
+
+        try{
+            //List<Bar> bars = new ArrayList<>();
+            JSONObject formattedData = new JSONObject(response);
+            JSONArray arr = formattedData.getJSONArray("results");
+
+            for (int i = 0; i < arr.length(); i++)
+            {
+                String name = arr.getJSONObject(i).getString("name");
+                String address = arr.getJSONObject(i).getString("address");
+                String phone = arr.getJSONObject(i).getString("phone");
+                String latitude = arr.getJSONObject(i).getString("latitude");
+                String longitude = arr.getJSONObject(i).getString("longitude");
+
+                // On fait une requete sur le nom du bar
+                Bar bar = dataSource.getBarByName(name);
+
+
+                // Si la requete ne donne rien, on creer le bar
+                if (bar == null) {
+                    Bar bar2 = dataSource.createBar(name, address, "",latitude, longitude);
+                    Log.d("bar created : ", bar2.toString());
+                }
+
+            }
+        } catch (Exception e) {
+            Log.d("updateDatabase() : ", e.getMessage());
         }
     }
 }

@@ -49,13 +49,18 @@ public class MyEndpoint {
 
         List<Bar> listBar = gb.getBars();
         int i = 0;
-        String resultBars = "";
+        String resultBars = "{ \"results\" : [";
         while(i<listBar.size()){
-            resultBars+=listBar.get(i);
+            System.out.println(listBar.get(i).toString());
+            resultBars+=listBar.get(i).toString();
+            if (i!=listBar.size()-1)
+                resultBars+=", ";
             i++;
         }
+        resultBars+= "] }";
 
         response.setData(resultBars);
+        System.out.println(resultBars);
         return response;
     }
 }

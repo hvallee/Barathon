@@ -70,4 +70,15 @@ public class Bar {
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
+
+    @Override
+    public String toString() {
+        return "{\"id\":" + id +
+                ", \"name\":\"" + name + '\"' +
+                ", \"address\":\"" + address + '\"' +
+                ", \"phone\":\"" + phone + '\"' +
+                ", \"latitude\":\"" + latitude + '\"' +
+                ", \"longitude\":\"" + longitude + '\"' +
+                '}';
+    }
 }
