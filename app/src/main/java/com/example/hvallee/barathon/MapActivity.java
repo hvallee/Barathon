@@ -27,7 +27,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-
         /*
         dataSource = new BarsDataSource(this);
         dataSource.open();
@@ -51,8 +50,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         map.setMyLocationEnabled(true);
         for (Bar b : bars) {
 
-            pos_bar = new LatLng(  Integer.parseInt(b.getLatitude()), Integer.parseInt(b.getLongitude()));
-
+            pos_bar = new LatLng( Double.parseDouble(b.getLatitude()), Double.parseDouble(b.getLongitude()));
 
             map.addMarker(new MarkerOptions()
                     .title(b.getName())
