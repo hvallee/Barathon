@@ -16,4 +16,5 @@
     <string name="title_activity_bar_details">BarDetails</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_recycler_view_activity">Recycler_view_activity</string>
 </resources>

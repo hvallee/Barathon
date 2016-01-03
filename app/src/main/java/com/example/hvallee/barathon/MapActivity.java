@@ -26,14 +26,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        /*
-        dataSource = new BarsDataSource(this);
-        dataSource.open();
-        dataSource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
-        dataSource.close();
-        */
-
     }
 
     @Override
@@ -46,6 +38,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
 
         LatLng pos_bar;
         // map.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 13));
+
         // parcours La liste des bars pour mettre les marqueurs
         map.setMyLocationEnabled(true);
         for (Bar b : bars) {
@@ -57,5 +50,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .snippet(b.getAddress())
                     .position(pos_bar));
         }
+        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos_bar, 13));
     }
 }
