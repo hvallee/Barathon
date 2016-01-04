@@ -31,12 +31,12 @@ public class BarsDataSource {
             MySQLiteHelper.COLUMN_LATITUDE,
             MySQLiteHelper.COLUMN_LONGITUDE};
 
-    private String[] allColumnsParcour = {
+    private String[] allColumnsParcours = {
             MySQLiteHelper.COLUMN_ID_PARCOURS,
             MySQLiteHelper.COLUMN_NAME_PARCOURS,
             MySQLiteHelper.COLUMN_DESCRIPTION_PARCOURS};
 
-    private String[] allColumnsBarParcour = {
+    private String[] allColumnsBarParcours = {
             MySQLiteHelper.COLUMN_BARS_ID,
             MySQLiteHelper.COLUMN_PARCOURS_ID};
 
@@ -138,16 +138,16 @@ public class BarsDataSource {
         return bar;
     }
 
-    private Parcours cursorToParcour(Cursor cursor) {
-        Parcours parcour = new Parcours(cursor.getLong(0),
+    private Parcours cursorToParcours(Cursor cursor) {
+        Parcours parcours = new Parcours(cursor.getLong(0),
                 cursor.getString(1),
                 cursor.getString(2));
-        return parcour;
+        return parcours;
     }
 
-    public Parcours createParcour(String name, String description){
+    public Parcours createParcours(String name, String description){
 
-        // Création du content values contenant les infos du parcour
+        // Création du content values contenant les infos du parcours
         ContentValues contentValues = new ContentValues();
         contentValues.put(MySQLiteHelper.COLUMN_NAME_PARCOURS, name);
         contentValues.put(MySQLiteHelper.COLUMN_DESCRIPTION_PARCOURS, description);
@@ -156,36 +156,36 @@ public class BarsDataSource {
         Long insertId = database.insert(MySQLiteHelper.TABLE_PARCOURS, null, contentValues);
 
 
-        // On récupère via un cursor le parcour créé, avec l'id
+        // On récupère via un cursor le parcours créé, avec l'id
         Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS,
-                allColumnsParcour, MySQLiteHelper.COLUMN_ID_PARCOURS + " = " + insertId, null,
+                allColumnsParcours, MySQLiteHelper.COLUMN_ID_PARCOURS + " = " + insertId, null,
                 null, null, null);
 
-        // On transforme le cursor en Parcour
+        // On transforme le cursor en Parcours
         cursor.moveToFirst();
-        Parcours parcour = cursorToParcour(cursor);
+        Parcours parcours = cursorToParcours(cursor);
         cursor.close();
 
-        // On return le parcour
-        return parcour;
+        // On return le parcours
+        return parcours;
     }
 
-    public Parcours getParcourById(int id) {
-        Parcours parcour = null;
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS, allColumnsParcour, MySQLiteHelper.COLUMN_ID_PARCOURS
+    public Parcours getParcoursById(int id) {
+        Parcours parcours = null;
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS, allColumnsParcours, MySQLiteHelper.COLUMN_ID_PARCOURS
                 + " = " + id, null, null, null, null, null);
         if (cursor.moveToFirst()) {
-            parcour = cursorToParcour(cursor);
+            parcours = cursorToParcours(cursor);
         }
-        return parcour;
+        return parcours;
     }
 
-    public Long insertBarintoParcour(int idParcour, int idBar) {
+    public Long insertBarIntoParcours(int idParcours, int idBar) {
 
         // Création du contentvalues
         ContentValues contentValues = new ContentValues();
         contentValues.put(MySQLiteHelper.COLUMN_BARS_ID, idBar);
-        contentValues.put(MySQLiteHelper.COLUMN_PARCOURS_ID, idParcour);
+        contentValues.put(MySQLiteHelper.COLUMN_PARCOURS_ID, idParcours);
 
         Long insertId = database.insert(MySQLiteHelper.TABLE_BARS_PARCOURS, null, contentValues);
 
@@ -193,13 +193,18 @@ public class BarsDataSource {
         return insertId;
     }
 
-    public List<Bar> getAllBarsOfParcour(int idParcour) {
+    public void deleteBarInParcours(Parcours parcours, Bar bar) {
+        database.delete(MySQLiteHelper.TABLE_BARS_PARCOURS,
+                MySQLiteHelper.COLUMN_PARCOURS_ID + " = " + parcours.getId() + " AND " + MySQLiteHelper.COLUMN_BARS_ID +  "=" + bar.getId(), null);
+    }
+
+    public List<Bar> getAllBarsOfParcours(int idParcours) {
         // On crée une List de Bar vide
         List<Bar> bars = new ArrayList<Bar>();
 
         // Une requête qui remplit le cursor
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS_PARCOURS, allColumnsBarParcour, MySQLiteHelper.COLUMN_PARCOURS_ID
-                + " = " + idParcour,null,null,null,null,null);
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS_PARCOURS, allColumnsBarParcours, MySQLiteHelper.COLUMN_PARCOURS_ID
+                + " = " + idParcours,null,null,null,null,null);
         cursor.moveToFirst();
 
         //Tant que le cursor n'est pas vide, on recup les Bars via une requête
@@ -212,4 +217,5 @@ public class BarsDataSource {
 
         return bars;
     }
+
 }

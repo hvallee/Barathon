@@ -1,6 +1,7 @@
 package com.example.hvallee.barathon;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -10,6 +11,7 @@ import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
+import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -37,6 +39,14 @@ public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
         super.onPreExecute();
         datasource = new BarsDataSource(mContext);
         datasource.open();
+    }
+
+    @Override
+    protected void onProgressUpdate(Void... values) {
+        ProgressWheel wheel = new ProgressWheel(mContext);
+        wheel.setBarColor(Color.BLUE);
+        wheel.spin();
+        super.onProgressUpdate(values);
     }
 
     @Override
