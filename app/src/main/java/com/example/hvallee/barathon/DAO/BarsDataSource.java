@@ -36,6 +36,10 @@ public class BarsDataSource {
             MySQLiteHelper.COLUMN_NAME_PARCOURS,
             MySQLiteHelper.COLUMN_DESCRIPTION_PARCOURS};
 
+    private String[] allColumnsBarParcour = {
+            MySQLiteHelper.COLUMN_BARS_ID,
+            MySQLiteHelper.COLUMN_PARCOURS_ID};
+
     public BarsDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
     }
@@ -174,5 +178,38 @@ public class BarsDataSource {
             parcour = cursorToParcour(cursor);
         }
         return parcour;
+    }
+
+    public Long insertBarintoParcour(int idParcour, int idBar) {
+
+        // Création du contentvalues
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MySQLiteHelper.COLUMN_BARS_ID, idBar);
+        contentValues.put(MySQLiteHelper.COLUMN_PARCOURS_ID, idParcour);
+
+        Long insertId = database.insert(MySQLiteHelper.TABLE_BARS_PARCOURS, null, contentValues);
+
+        // Return id car pas de bars_parcours dans le modèle
+        return insertId;
+    }
+
+    public List<Bar> getAllBarsOfParcour(int idParcour) {
+        // On crée une List de Bar vide
+        List<Bar> bars = new ArrayList<Bar>();
+
+        // Une requête qui remplit le cursor
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS_PARCOURS, allColumnsBarParcour, MySQLiteHelper.COLUMN_PARCOURS_ID
+                + " = " + idParcour,null,null,null,null,null);
+        cursor.moveToFirst();
+
+        //Tant que le cursor n'est pas vide, on recup les Bars via une requête
+        while (!cursor.isAfterLast()) {
+            Bar bar = getBarById(cursor.getInt(0));
+            bars.add(bar);
+            cursor.moveToNext();
+        }
+        cursor.close();
+
+        return bars;
     }
 }
