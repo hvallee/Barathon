@@ -165,4 +165,14 @@ public class BarsDataSource {
         // On return le parcour
         return parcour;
     }
+
+    public Parcour getParcourById(int id) {
+        Parcour parcour = null;
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS, allColumnsParcour, MySQLiteHelper.COLUMN_ID_PARCOURS
+                + " = " + id, null, null, null, null, null);
+        if (cursor.moveToFirst()) {
+            parcour = cursorToParcour(cursor);
+        }
+        return parcour;
+    }
 }

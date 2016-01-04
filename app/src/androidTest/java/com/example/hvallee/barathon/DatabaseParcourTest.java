@@ -41,4 +41,22 @@ public class DatabaseParcourTest extends AndroidTestCase {
         Assert.assertEquals(descritption, parcour.getDescription());
     }
 
+    public void testGetParcourById(){
+
+        // On insert un parcour
+        String nom = "mon parcour";
+        String description = "Description du parcour";
+        Parcour parcour = datasource.createParcour(nom, description);
+        Assert.assertEquals(parcour.getId(), 1);
+
+        // Pour on le récupère dans la bdd
+        Parcour parcour2 = datasource.getParcourById((int)parcour.getId());
+
+        //Puis test de l'égalité des deux parcours
+        Assert.assertEquals(parcour.getName(), parcour2.getName());
+        Assert.assertEquals(parcour.getDescription(), parcour2.getDescription());
+
+        // Test false
+        Assert.assertFalse(parcour2.getName().equals("TEST"));
+    }
 }
