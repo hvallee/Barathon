@@ -32,23 +32,23 @@ public class DatabaseParcourTest extends AndroidTestCase {
         datasource.close();
     }
 
-    public void testCreateParcour(){
-        // test que createparcour retourne un parcour.
+    public void testCreateParcours(){
+        // test que createparcours retourne un parcours.
 
-        String nom = "mon parcour";
-        String descritption = "Description du parcour";
+        String nom = "mon parcours";
+        String descritption = "Description du parcours";
 
-        Parcours parcour = datasource.createParcours(nom, descritption);
+        Parcours parcours = datasource.createParcours(nom, descritption);
 
-        Assert.assertEquals(nom, parcour.getName());
-        Assert.assertEquals(descritption, parcour.getDescription());
+        Assert.assertTrue(parcours instanceof Parcours);
+        Assert.assertEquals(nom, parcours.getName());
+        Assert.assertEquals(descritption, parcours.getDescription());
     }
 
-    public void testGetParcourById(){
-
-        // On insert un parcour
-        String nom = "mon parcour";
-        String description = "Description du parcour";
+    public void testGetParcoursById(){
+        // On insert un parcours
+        String nom = "mon parcours";
+        String description = "Description du parcours";
         Parcours parcour = datasource.createParcours(nom, description);
         Assert.assertEquals(parcour.getId(), 1);
 
@@ -64,10 +64,10 @@ public class DatabaseParcourTest extends AndroidTestCase {
     }
 
     public void testinsertBarIntoParcour(){
-        // On insert un parcour
-        String nom = "mon parcour";
-        String description = "Description du parcour";
-        Parcours parcour = datasource.createParcours(nom, description);
+        // On insert un parcours
+        String nom = "mon parcours";
+        String description = "Description du parcours";
+        datasource.createParcours(nom, description);
 
         // On insert des bars
         datasource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
@@ -78,10 +78,10 @@ public class DatabaseParcourTest extends AndroidTestCase {
     }
 
     public void testGetAllBarsByParcourId() {
-        // On insert un parcour
+        // On insert un parcours
         String nom = "mon parcour";
         String description = "Description du parcour";
-        Parcours parcour = datasource.createParcours(nom, description);
+        datasource.createParcours(nom, description);
 
         // On insert des bars
         String nameBar1 = "LE PETIT VELO";
@@ -108,10 +108,10 @@ public class DatabaseParcourTest extends AndroidTestCase {
     }
 
     public void testDeleteBarInParcours() {
-        // On insert un parcour
-        String nom = "mon parcour";
+        // On insert un parcours
+        String nom = "mon parcours";
         String description = "Description du parcour";
-        Parcours parcour = datasource.createParcours(nom, description);
+        Parcours parcours = datasource.createParcours(nom, description);
 
         // On insert des bars
         String nameBar1 = "LE PETIT VELO";
@@ -126,10 +126,8 @@ public class DatabaseParcourTest extends AndroidTestCase {
         datasource.insertBarIntoParcours(1, 2);
         datasource.insertBarIntoParcours(1, 3);
 
-        Parcours parcours = datasource.getParcoursById(1);
-        Bar bar = datasource.getBarById(2);
-
         // On supprime un bar
+        Bar bar = datasource.getBarById(2);
         datasource.deleteBarInParcours(parcours, bar);
 
         // On récupère la liste complète des bars
@@ -150,5 +148,32 @@ public class DatabaseParcourTest extends AndroidTestCase {
         // Puis test la taille et le nom du bar restant (#3)
         Assert.assertEquals(1, bars.size()); // n'en reste plus qu'un
         Assert.assertEquals(nameBar3, bars.get(0).getName());
+    }
+
+    public void testDeleteParcours() {
+        // On insert un parcours
+        String nom = "mon parcours";
+        String description = "Description du parcours";
+        Parcours parcours = datasource.createParcours(nom, description);
+
+        // On insert des bars
+        String nameBar1 = "LE PETIT VELO";
+        String nameBar2 = "TIO PAQUITO";
+        String nameBar3 = "NAME TEST";
+        datasource.createBar(nameBar1, "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
+        datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188");
+        datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188");
+
+        // Insertion des bars dans le parcours 1
+        datasource.insertBarIntoParcours(1, 1);
+        datasource.insertBarIntoParcours(1, 2);
+        datasource.insertBarIntoParcours(1, 3);
+
+        // Puis on supprime le parcours
+        datasource.deleteParcours(parcours);
+
+        // test de recup le parcours delete
+        Parcours parcoursTest = datasource.getParcoursById(1);
+        Assert.assertTrue(parcoursTest == null);
     }
 }
