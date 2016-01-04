@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.hvallee.barathon.Model.Bar;
+import com.example.hvallee.barathon.Model.Parcour;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +23,18 @@ public class BarsDataSource {
     // Database fields
     private SQLiteDatabase database;
     private MySQLiteHelper dbHelper;
-    private String[] allColumns = {
+    private String[] allColumnsBar = {
             MySQLiteHelper.COLUMN_ID,
             MySQLiteHelper.COLUMN_NAME,
             MySQLiteHelper.COLUMN_ADDRESS,
             MySQLiteHelper.COLUMN_PHONE,
             MySQLiteHelper.COLUMN_LATITUDE,
             MySQLiteHelper.COLUMN_LONGITUDE};
+
+    private String[] allColumnsParcour = {
+            MySQLiteHelper.COLUMN_ID_PARCOURS,
+            MySQLiteHelper.COLUMN_NAME_PARCOURS,
+            MySQLiteHelper.COLUMN_DESCRIPTION_PARCOURS};
 
     public BarsDataSource(Context context) {
         dbHelper = new MySQLiteHelper(context);
@@ -58,7 +64,7 @@ public class BarsDataSource {
 
         // Requête qui recupère le Bar précédement inséré
         Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,
-                allColumns, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
+                allColumnsBar, MySQLiteHelper.COLUMN_ID + " = " + insertId, null,
                 null, null, null);
 
         // On recup le bar via le cursor + close() du cursor
@@ -84,7 +90,7 @@ public class BarsDataSource {
 
         // Une requête qui remplit le cursor
         Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,
-                allColumns, null, null, null, null, null);
+                allColumnsBar, null, null, null, null, null);
         cursor.moveToFirst();
         //Tant que le cursor n'est pas vide, on insère les Bars dans la liste
         while (!cursor.isAfterLast()) {
@@ -99,7 +105,7 @@ public class BarsDataSource {
 
     public Bar getBarById(int id) {
         Bar bar = null;
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,allColumns, MySQLiteHelper.COLUMN_ID
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS, allColumnsBar, MySQLiteHelper.COLUMN_ID
                 + " = " + id,null,null,null,null,null);
         if (cursor.moveToFirst()) {
             bar = cursorToBar(cursor);
@@ -109,7 +115,7 @@ public class BarsDataSource {
 
     public Bar getBarByName(String name) {
         Bar bar = null;
-        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,allColumns, MySQLiteHelper.COLUMN_NAME
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS, allColumnsBar, MySQLiteHelper.COLUMN_NAME
                 + " = \"" + name + "\"",null,null,null,null,null);
         if (cursor.moveToFirst()) {
             bar = cursorToBar(cursor);
@@ -128,4 +134,35 @@ public class BarsDataSource {
         return bar;
     }
 
+    private Parcour cursorToParcour(Cursor cursor) {
+        Parcour parcour = new Parcour(cursor.getLong(0),
+                cursor.getString(1),
+                cursor.getString(2));
+        return parcour;
+    }
+
+    public Parcour createParcour(String name, String description){
+
+        // Création du content values contenant les infos du parcour
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(MySQLiteHelper.COLUMN_NAME_PARCOURS, name);
+        contentValues.put(MySQLiteHelper.COLUMN_DESCRIPTION_PARCOURS, description);
+
+        // Requête d'insertion qui renvoit l'id de l'objet créé
+        Long insertId = database.insert(MySQLiteHelper.TABLE_PARCOURS, null, contentValues);
+
+
+        // On récupère via un cursor le parcour créé, avec l'id
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS,
+                allColumnsParcour, MySQLiteHelper.COLUMN_ID_PARCOURS + " = " + insertId, null,
+                null, null, null);
+
+        // On transforme le cursor en Parcour
+        cursor.moveToFirst();
+        Parcour parcour = cursorToParcour(cursor);
+        cursor.close();
+
+        // On return le parcour
+        return parcour;
+    }
 }

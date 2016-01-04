@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by yoannlt on 29/11/2015.
  */
-public class DatabaseTest extends AndroidTestCase {
+public class DatabaseBarTest extends AndroidTestCase {
     private BarsDataSource dataSource;
 
     @Override

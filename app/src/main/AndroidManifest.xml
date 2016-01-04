@@ -3,8 +3,6 @@
     package="com.example.hvallee.barathon">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="22" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" android:maxSdkVersion="22" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +11,6 @@
         android:theme="@style/AppTheme">
 
         <meta-data android:name="com.google.android.maps.v2.API_KEY" android:value="AIzaSyAQJtjWRdnAgiWyhL0I0Hb5xwDb6AxlW4M" />
-        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".MainActivity"
