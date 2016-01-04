@@ -74,4 +74,12 @@ public class ListBarAdapter extends BaseAdapter {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void clear(){
+        mListBars.clear();
+    }
+
+    public void setmListBars(List<Bar> list){
+        mListBars = list;
+    }
 }

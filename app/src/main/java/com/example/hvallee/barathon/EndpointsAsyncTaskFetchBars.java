@@ -1,17 +1,17 @@
 package com.example.hvallee.barathon;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.baoyz.widget.PullRefreshLayout;
+import com.example.hvallee.barathon.Adapter.ListBarAdapter;
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
-import com.pnikosis.materialishprogress.ProgressWheel;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,28 +25,24 @@ import barathon.backend.myApi.MyApi;
  */
 public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
 
-    private Context mContext;
-
-    public EndpointsAsyncTaskFetchBars(Context context){
-        mContext = context;
-    }
-
     private MyApi myApiService = null;
     private BarsDataSource datasource;
+    private Context mContext;
+    private ListBarAdapter mAdapter;
+    private PullRefreshLayout swipeRefresh;
+
+    public EndpointsAsyncTaskFetchBars(BarsDataSource datasource, Context mContext, ListBarAdapter adapter, PullRefreshLayout swipeRefresh) {
+        this.datasource = datasource;
+        this.mContext = mContext;
+        mAdapter = adapter;
+        this.swipeRefresh = swipeRefresh;
+    }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
         datasource = new BarsDataSource(mContext);
         datasource.open();
-    }
-
-    @Override
-    protected void onProgressUpdate(Void... values) {
-        ProgressWheel wheel = new ProgressWheel(mContext);
-        wheel.setBarColor(Color.BLUE);
-        wheel.spin();
-        super.onProgressUpdate(values);
     }
 
     @Override
@@ -80,17 +76,18 @@ public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         updateDatabase(result);
+        mAdapter.clear();
+        mAdapter.setmListBars(datasource.getAllBars());
+        mAdapter.notifyDataSetChanged();
+
+        swipeRefresh.setRefreshing(false);
         datasource.close();
     }
 
-    /*
-    String data : les données des bars au format JSON
-     */
     private void updateDatabase(String response) {
         Log.d("Reponse server :", response);
 
         try{
-            //List<Bar> bars = new ArrayList<>();
             JSONObject formattedData = new JSONObject(response);
             JSONArray arr = formattedData.getJSONArray("results");
 
@@ -104,7 +101,6 @@ public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
 
                 // On fait une requete sur le nom du bar
                 Bar bar = datasource.getBarByName(name);
-
 
                 // Si la requete ne donne rien, on creer le bar
                 if (bar == null) {

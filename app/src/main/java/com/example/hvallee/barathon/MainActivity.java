@@ -56,9 +56,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), ListBarActivity.class);
             startActivity(intent);
         }
-        if(id == R.id.action_refresh_data) {
-            new EndpointsAsyncTaskFetchBars(getApplication()).execute();
-        }
 
         return super.onOptionsItemSelected(item);
     }
