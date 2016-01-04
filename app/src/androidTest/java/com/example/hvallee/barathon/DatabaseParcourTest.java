@@ -2,11 +2,10 @@ package com.example.hvallee.barathon;
 
 import android.test.AndroidTestCase;
 import android.test.RenamingDelegatingContext;
-import android.util.Log;
 
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
-import com.example.hvallee.barathon.Model.Parcour;
+import com.example.hvallee.barathon.Model.Parcours;
 
 import junit.framework.Assert;
 
@@ -39,7 +38,7 @@ public class DatabaseParcourTest extends AndroidTestCase {
         String nom = "mon parcour";
         String descritption = "Description du parcour";
 
-        Parcour parcour = datasource.createParcour(nom, descritption);
+        Parcours parcour = datasource.createParcour(nom, descritption);
 
         Assert.assertEquals(nom, parcour.getName());
         Assert.assertEquals(descritption, parcour.getDescription());
@@ -50,11 +49,11 @@ public class DatabaseParcourTest extends AndroidTestCase {
         // On insert un parcour
         String nom = "mon parcour";
         String description = "Description du parcour";
-        Parcour parcour = datasource.createParcour(nom, description);
+        Parcours parcour = datasource.createParcour(nom, description);
         Assert.assertEquals(parcour.getId(), 1);
 
         // Pour on le récupère dans la bdd
-        Parcour parcour2 = datasource.getParcourById((int)parcour.getId());
+        Parcours parcour2 = datasource.getParcourById((int)parcour.getId());
 
         //Puis test de l'égalité des deux parcours
         Assert.assertEquals(parcour.getName(), parcour2.getName());
@@ -68,7 +67,7 @@ public class DatabaseParcourTest extends AndroidTestCase {
         // On insert un parcour
         String nom = "mon parcour";
         String description = "Description du parcour";
-        Parcour parcour = datasource.createParcour(nom, description);
+        Parcours parcour = datasource.createParcour(nom, description);
 
         // On insert des bars
         datasource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
@@ -82,7 +81,7 @@ public class DatabaseParcourTest extends AndroidTestCase {
         // On insert un parcour
         String nom = "mon parcour";
         String description = "Description du parcour";
-        Parcour parcour = datasource.createParcour(nom, description);
+        Parcours parcour = datasource.createParcour(nom, description);
 
         // On insert des bars
         String nameBar1 = "LE PETIT VELO";
@@ -92,6 +91,7 @@ public class DatabaseParcourTest extends AndroidTestCase {
         datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188");
         datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188");
 
+        // Insertion des bars dans le parcours 1
         datasource.insertBarintoParcour(1, 1);
         datasource.insertBarintoParcour(1, 2);
         datasource.insertBarintoParcour(1, 3);
@@ -101,6 +101,7 @@ public class DatabaseParcourTest extends AndroidTestCase {
         // Test de la taille du
         Assert.assertTrue("Taille de la liste retournée NOK", bars.size() == 3);
 
+        // Test du nom des 3 bars retournés
         Assert.assertEquals(nameBar1, bars.get(0).getName());
         Assert.assertEquals(nameBar2, bars.get(1).getName());
         Assert.assertEquals(nameBar3, bars.get(2).getName());

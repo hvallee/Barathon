@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.example.hvallee.barathon.Model.Bar;
-import com.example.hvallee.barathon.Model.Parcour;
+import com.example.hvallee.barathon.Model.Parcours;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,14 +138,14 @@ public class BarsDataSource {
         return bar;
     }
 
-    private Parcour cursorToParcour(Cursor cursor) {
-        Parcour parcour = new Parcour(cursor.getLong(0),
+    private Parcours cursorToParcour(Cursor cursor) {
+        Parcours parcour = new Parcours(cursor.getLong(0),
                 cursor.getString(1),
                 cursor.getString(2));
         return parcour;
     }
 
-    public Parcour createParcour(String name, String description){
+    public Parcours createParcour(String name, String description){
 
         // Création du content values contenant les infos du parcour
         ContentValues contentValues = new ContentValues();
@@ -163,15 +163,15 @@ public class BarsDataSource {
 
         // On transforme le cursor en Parcour
         cursor.moveToFirst();
-        Parcour parcour = cursorToParcour(cursor);
+        Parcours parcour = cursorToParcour(cursor);
         cursor.close();
 
         // On return le parcour
         return parcour;
     }
 
-    public Parcour getParcourById(int id) {
-        Parcour parcour = null;
+    public Parcours getParcourById(int id) {
+        Parcours parcour = null;
         Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS, allColumnsParcour, MySQLiteHelper.COLUMN_ID_PARCOURS
                 + " = " + id, null, null, null, null, null);
         if (cursor.moveToFirst()) {

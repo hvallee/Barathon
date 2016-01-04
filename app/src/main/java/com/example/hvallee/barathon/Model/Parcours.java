@@ -3,17 +3,17 @@ package com.example.hvallee.barathon.Model;
 /**
  * Created by Yoann on 22/12/2015.
  */
-public class Parcour {
+public class Parcours {
     private long id;
     private String name;
     private String description;
     private int budget;
     private int difficulty;
 
-    public Parcour(){
+    public Parcours(){
     }
 
-    public Parcour(long id, String name, String description) {
+    public Parcours(long id, String name, String description) {
         this.id = id;
         this.name = name;
         this.description = description;
