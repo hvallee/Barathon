@@ -13,7 +13,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String LOG_TAG = MySQLiteHelper.class.getName();
 
     // Database version
-    private static final int DATABASE_VERSION = 20;
+    private static final int DATABASE_VERSION = 25;
 
     // Database name
     private static final String DATABASE_NAME = "barathon";

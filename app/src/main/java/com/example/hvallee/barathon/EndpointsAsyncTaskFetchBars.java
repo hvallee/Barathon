@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.baoyz.widget.PullRefreshLayout;
-import com.example.hvallee.barathon.Adapter.ListBarAdapter;
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -27,21 +25,18 @@ public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
 
     private MyApi myApiService = null;
     private BarsDataSource datasource;
-    private Context mContext;
-    private ListBarAdapter mAdapter;
-    private PullRefreshLayout swipeRefresh;
+    private Context context;
+    private OnTaskCompleted listener;
 
-    public EndpointsAsyncTaskFetchBars(BarsDataSource datasource, Context mContext, ListBarAdapter adapter, PullRefreshLayout swipeRefresh) {
-        this.datasource = datasource;
-        this.mContext = mContext;
-        mAdapter = adapter;
-        this.swipeRefresh = swipeRefresh;
+    public EndpointsAsyncTaskFetchBars(OnTaskCompleted listener, Context context) {
+        this.listener = listener;
+        this.context = context;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        datasource = new BarsDataSource(mContext);
+        datasource = new BarsDataSource(context);
         datasource.open();
     }
 
@@ -76,11 +71,7 @@ public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         updateDatabase(result);
-        mAdapter.clear();
-        mAdapter.setmListBars(datasource.getAllBars());
-        mAdapter.notifyDataSetChanged();
-
-        swipeRefresh.setRefreshing(false);
+        listener.OnTaskCompleted();
         datasource.close();
     }
 
