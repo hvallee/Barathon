@@ -145,7 +145,7 @@ public class BarsDataSource {
         return parcours;
     }
 
-    public Parcours createParcours(String name, String description){
+    public Long createParcours(String name, String description){
 
         // Création du content values contenant les infos du parcours
         ContentValues contentValues = new ContentValues();
@@ -167,7 +167,7 @@ public class BarsDataSource {
         cursor.close();
 
         // On return le parcours
-        return parcours;
+        return parcours.getId();
     }
 
     public Parcours getParcoursById(int id) {
