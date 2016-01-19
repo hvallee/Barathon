@@ -1,5 +1,6 @@
 package com.example.hvallee.barathon;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,9 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
     private List<Bar> bars;
     private PullRefreshLayout swipeRefresh;
     private EndpointsAsyncTaskFetchBars asyncTask;
+
+    private Context context;
+    private OnTaskCompleted taskCompleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +54,13 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
             }
         });
 
-        asyncTask = new EndpointsAsyncTaskFetchBars(this, this);
-
+        // A mettre en paramètre pour le callback
+        context = this;
+        taskCompleted = this;
         swipeRefresh.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                asyncTask.execute();
+                new EndpointsAsyncTaskFetchBars(taskCompleted, context).execute();
             }
         });
     }
