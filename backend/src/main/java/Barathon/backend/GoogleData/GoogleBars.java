@@ -121,15 +121,17 @@ public class GoogleBars {
                 try{
                     /**
                      * Permet de récuperer un token pour refaire une demande à l'api
-                     * Si next_page_token renvoie une exception c'est qu'on a atteind la fin
+                     * Si  data.getString(next_page_token) renvoie une exception c'est qu'on a atteind la fin
                      */
                     String token = data.getString("next_page_token");
+                    System.out.println("url + \"&pagetoken=\" + token " +url + "&pagetoken=" + token;
                     System.out.println("token : " + token);
                     eget = googleBars.sendGet(url + "&pagetoken=" + token);
                     data = new JSONObject(eget);
+                    System.out.println("DATA :" + data);
                     arr = data.getJSONArray("results");
                 } catch (Exception e1){
-                    //e1.printStackTrace();
+                    e1.printStackTrace();
                     continuer = false;
                 }
             }
@@ -143,11 +145,7 @@ public class GoogleBars {
     public ArrayList<Bar> buildBarFromArray( JSONArray arr, ArrayList bars ) throws Exception {
         System.out.println("Taille de la liste avant ajout : " + bars.size());
         System.out.println(arr.toString());
-        Bar bar;
-        String address;
-        String name;
-        String latitude;
-        String longitude;
+        Bar bar; String address; String name; String latitude; String longitude;
         for(int i = 0; i < arr.length(); i++) {
             address = arr.getJSONObject(i).getString("formatted_address");
             name = arr.getJSONObject(i).getString("name");
@@ -162,9 +160,7 @@ public class GoogleBars {
             bars.add(bar);
         }
         System.out.println("Taille de la liste après ajout : "  + bars.size());
-
         return bars;
-
     }
 
 
