@@ -18,6 +18,7 @@ import javax.sql.DataSource;
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private BarsDataSource dataSource;
+    private static final LatLng RENNES = new LatLng(48.117266,-1.67779);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +51,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     .snippet(b.getAddress())
                     .position(pos_bar));
         }
-        //map.moveCamera(CameraUpdateFactory.newLatLngZoom(pos_bar, 13));
+        // zoom position rennes
+        //LatLngBounds RENNES = new LatLngBounds(new LatLng(48, -1.6), new LatLng(48, -1.6));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(RENNES, 12));
+
+
     }
 }
