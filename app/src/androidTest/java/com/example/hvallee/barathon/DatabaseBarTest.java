@@ -22,9 +22,9 @@ public class DatabaseBarTest extends AndroidTestCase {
         RenamingDelegatingContext context = new RenamingDelegatingContext(getContext(), "test_");
         dataSource = new BarsDataSource(context);
         dataSource.open();
-        dataSource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
-        dataSource.createBar("TIO PAQUITO", "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188");
-        dataSource.createBar("LESQUINADE", "1 rue de Dinan 35000 Rennes", "0299311111", "48.1061346", "-1.6954336");
+        dataSource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866","url");
+        dataSource.createBar("TIO PAQUITO", "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188","url");
+        dataSource.createBar("LESQUINADE", "1 rue de Dinan 35000 Rennes", "0299311111", "48.1061346", "-1.6954336","url");
     }
 
     @Override

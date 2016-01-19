@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
 import com.example.hvallee.barathon.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -53,9 +55,10 @@ public class ListBarAdapter extends BaseAdapter {
 
         myViewHolder.barName = (TextView)row.findViewById(R.id.bar_name);
         myViewHolder.barAddress = (TextView)row.findViewById(R.id.bar_address);
-
+        myViewHolder.barImage = (ImageView)row.findViewById(R.id.bar_image);
         myViewHolder.barName.setText(mListBars.get(position).getName());
         myViewHolder.barAddress.setText(mListBars.get(position).getAddress());
+        Picasso.with(mContext).load(mListBars.get(position).getUrl()).resize(50, 50).into(myViewHolder.barImage);
 
         setId(mListBars.get(position).getId());
 
@@ -65,6 +68,7 @@ public class ListBarAdapter extends BaseAdapter {
     private static class MyViewHolder {
         TextView barName;
         TextView barAddress;
+        ImageView barImage;
     }
 
     public Long getId() {

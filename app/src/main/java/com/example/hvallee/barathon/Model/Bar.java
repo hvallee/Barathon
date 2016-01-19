@@ -10,17 +10,20 @@ public class Bar {
     private String phone;
     private String latitude;
     private String longitude;
+    private String url;
+
 
     public Bar() {
     }
 
-    public Bar(long id, String name, String address, String phone, String latitude, String longitude) {
+    public Bar(long id, String name, String address, String phone, String latitude, String longitude, String url) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.url = url;
     }
 
     public long getId() {
@@ -69,5 +72,13 @@ public class Bar {
 
     public void setLongitude(String longitude) {
         this.longitude = longitude;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

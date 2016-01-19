@@ -70,8 +70,8 @@ public class DatabaseParcourTest extends AndroidTestCase {
         datasource.createParcours(nom, description);
 
         // On insert des bars
-        datasource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
-        datasource.createBar("TIO PAQUITO", "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188");
+        datasource.createBar("LE PETIT VELO", "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866","url");
+        datasource.createBar("TIO PAQUITO", "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188","url");
 
         datasource.insertBarIntoParcours(1, 1);
         datasource.insertBarIntoParcours(1, 2);
@@ -87,9 +87,9 @@ public class DatabaseParcourTest extends AndroidTestCase {
         String nameBar1 = "LE PETIT VELO";
         String nameBar2 = "TIO PAQUITO";
         String nameBar3 = "NAME TEST";
-        datasource.createBar(nameBar1, "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
-        datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188");
-        datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188");
+        datasource.createBar(nameBar1, "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866","url");
+        datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188","url");
+        datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188","url");
 
         // Insertion des bars dans le parcours 1
         datasource.insertBarIntoParcours(1, 1);
@@ -117,9 +117,9 @@ public class DatabaseParcourTest extends AndroidTestCase {
         String nameBar1 = "LE PETIT VELO";
         String nameBar2 = "TIO PAQUITO";
         String nameBar3 = "NAME TEST";
-        datasource.createBar(nameBar1, "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
-        datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188");
-        datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188");
+        datasource.createBar(nameBar1, "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866","url");
+        datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188","url");
+        datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188","url");
 
         // Insertion des bars dans le parcours 1
         datasource.insertBarIntoParcours(1, 1);
@@ -160,9 +160,9 @@ public class DatabaseParcourTest extends AndroidTestCase {
         String nameBar1 = "LE PETIT VELO";
         String nameBar2 = "TIO PAQUITO";
         String nameBar3 = "NAME TEST";
-        datasource.createBar(nameBar1, "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866");
-        datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188");
-        datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188");
+        datasource.createBar(nameBar1, "8 place Saint Michel 35000 Rennes", "0299795886", "48.113361", "-1.681866","url");
+        datasource.createBar(nameBar2, "16 rue Rallier du Baty 35000 Rennes", "0299781287", "48.1128963", "-1.6812188","url");
+        datasource.createBar(nameBar3, "14 rue Test 35000 Rennes", "0299743295", "48.1128963", "-1.6812188","url");
 
         // Insertion des bars dans le parcours 1
         datasource.insertBarIntoParcours(1, 1);

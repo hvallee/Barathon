@@ -102,7 +102,7 @@ public class GoogleBars {
         in.close();
 
         //print result
-       // System.out.println(response.toString());
+        // System.out.println(response.toString());
 
     }
 
@@ -121,13 +121,15 @@ public class GoogleBars {
                 try{
                     /**
                      * Permet de récuperer un token pour refaire une demande à l'api
-                     * Si next_page_token renvoie une exception c'est qu'on à atteind la fin
+                     * Si next_page_token renvoie une exception c'est qu'on a atteind la fin
                      */
                     String token = data.getString("next_page_token");
+                    System.out.println("token : " + token);
                     eget = googleBars.sendGet(url + "&pagetoken=" + token);
                     data = new JSONObject(eget);
                     arr = data.getJSONArray("results");
                 } catch (Exception e1){
+                    //e1.printStackTrace();
                     continuer = false;
                 }
             }
@@ -135,11 +137,12 @@ public class GoogleBars {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return bars;
     }
 
     public ArrayList<Bar> buildBarFromArray( JSONArray arr, ArrayList bars ) throws Exception {
+        System.out.println("Taille de la liste avant ajout : " + bars.size());
+        System.out.println(arr.toString());
         Bar bar;
         String address;
         String name;
@@ -158,6 +161,8 @@ public class GoogleBars {
             }
             bars.add(bar);
         }
+        System.out.println("Taille de la liste après ajout : "  + bars.size());
+
         return bars;
 
     }
