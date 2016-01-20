@@ -29,7 +29,9 @@ public class BarsDataSource {
             MySQLiteHelper.COLUMN_ADDRESS,
             MySQLiteHelper.COLUMN_PHONE,
             MySQLiteHelper.COLUMN_LATITUDE,
-            MySQLiteHelper.COLUMN_LONGITUDE};
+            MySQLiteHelper.COLUMN_LONGITUDE,
+            MySQLiteHelper.COLUMN_URL
+    };
 
     private String[] allColumnsParcours = {
             MySQLiteHelper.COLUMN_ID_PARCOURS,
@@ -52,7 +54,7 @@ public class BarsDataSource {
         dbHelper.close();
     }
 
-    public Bar createBar(String name, String address, String phone, String latitude, String longitude) {
+    public Bar createBar(String name, String address, String phone, String latitude, String longitude, String url) {
 
         // Création et instanciation du content value
         ContentValues values = new ContentValues();
@@ -61,7 +63,7 @@ public class BarsDataSource {
         values.put(MySQLiteHelper.COLUMN_PHONE, phone);
         values.put(MySQLiteHelper.COLUMN_LATITUDE, latitude);
         values.put(MySQLiteHelper.COLUMN_LONGITUDE, longitude);
-
+        values.put(MySQLiteHelper.COLUMN_URL, url);
         // insertion du bar : l'id est retourné
         long insertId = database.insert(MySQLiteHelper.TABLE_BARS, null,
                 values);
@@ -134,7 +136,9 @@ public class BarsDataSource {
                 cursor.getString(2),
                 cursor.getString(3),
                 cursor.getString(4),
-                cursor.getString(5));
+                cursor.getString(5),
+                cursor.getString(6)
+                );
         return bar;
     }
 
@@ -145,7 +149,7 @@ public class BarsDataSource {
         return parcours;
     }
 
-    public Long createParcours(String name, String description){
+    public Parcours createParcours(String name, String description){
 
         // Création du content values contenant les infos du parcours
         ContentValues contentValues = new ContentValues();
@@ -167,7 +171,7 @@ public class BarsDataSource {
         cursor.close();
 
         // On return le parcours
-        return parcours.getId();
+        return parcours;
     }
 
     public Parcours getParcoursById(int id) {

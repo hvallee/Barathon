@@ -49,7 +49,7 @@ public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
                     // options for running against local devappserver
                     // - 10.0.2.2 is localhost's IP address in Android emulator
                     // - turn off compression when running against local devappserver
-                    .setRootUrl("http://10.0.3.2:8080/_ah/api/")
+                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -89,13 +89,14 @@ public class EndpointsAsyncTaskFetchBars extends AsyncTask<Void, Void, String> {
                 String phone = arr.getJSONObject(i).getString("phone");
                 String latitude = arr.getJSONObject(i).getString("latitude");
                 String longitude = arr.getJSONObject(i).getString("longitude");
+                String url = arr.getJSONObject(i).getString("url");
 
                 // On fait une requete sur le nom du bar
                 Bar bar = datasource.getBarByName(name);
 
                 // Si la requete ne donne rien, on creer le bar
                 if (bar == null) {
-                    Bar bar2 = datasource.createBar(name, address, "",latitude, longitude);
+                    Bar bar2 = datasource.createBar(name, address, "",latitude, longitude, url);
                     Log.d("bar created : ", bar2.toString());
                 }
             }

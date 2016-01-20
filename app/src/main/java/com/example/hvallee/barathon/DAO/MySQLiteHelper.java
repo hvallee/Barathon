@@ -13,7 +13,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String LOG_TAG = MySQLiteHelper.class.getName();
 
     // Database version
-    private static final int DATABASE_VERSION = 27;
+    private static final int DATABASE_VERSION = 28;
 
     // Database name
     private static final String DATABASE_NAME = "barathon";
@@ -26,6 +26,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     public static final String COLUMN_PHONE = "phone";
     public static final String COLUMN_LATITUDE = "LATITUDE";
     public static final String COLUMN_LONGITUDE = "LONGITUDE";
+    public static final String COLUMN_URL = "URL";
 
     //Table PARCOURS
     public static final String TABLE_PARCOURS = "parcours";
@@ -48,6 +49,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             + " text not null, " + COLUMN_PHONE
             + " text not null, " + COLUMN_LATITUDE
             + " text not null, " + COLUMN_LONGITUDE
+            + " text not null, " + COLUMN_URL
             + " text not null);";
 
     // table parcours creation sql statement

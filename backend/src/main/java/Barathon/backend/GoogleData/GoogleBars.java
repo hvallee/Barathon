@@ -23,7 +23,10 @@ import Barathon.backend.Model.Bar;
 public class GoogleBars {
 
     private final String USER_AGENT = "Mozilla/5.0";
-
+    private final String URL_GOOGLE_API = "https://maps.googleapis.com/maps/api/";
+    private final String KEY_API = "AIzaSyD3ZVV7dO2a8cU9UUsC9ubYTky994DWhPo";
+    private final String DEBUT_URL_PHOTO_BAR = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=";
+    private final String FIN_URL_PHOTO_BAR = "&key=" + KEY_API;
     public static void main(String[] args) throws Exception {
 
         GoogleBars http = new GoogleBars();
@@ -99,68 +102,66 @@ public class GoogleBars {
         in.close();
 
         //print result
-       // System.out.println(response.toString());
+        // System.out.println(response.toString());
 
     }
 
     public List<Bar> getBars() {
         GoogleBars googleBars = new GoogleBars();
         ArrayList bars = new ArrayList();
-        String url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=bar+rennes&key=AIzaSyD3ZVV7dO2a8cU9UUsC9ubYTky994DWhPo";
+        String url = URL_GOOGLE_API + "place/textsearch/json?query=bar+rennes&key="+KEY_API;
 
         try {
-            String e = googleBars.sendGet(url);
-            JSONObject data = new JSONObject(e);
+            String eget = googleBars.sendGet(url);
+            JSONObject data = new JSONObject(eget);
             JSONArray arr = data.getJSONArray("results");
-
-            String result2;
-            String page3;
-            for(int page2 = 0; page2 < arr.length(); ++page2) {
-                result2 = arr.getJSONObject(page2).getString("formatted_address");
-                String data2 = arr.getJSONObject(page2).getString("name");
-                String arr2 = arr.getJSONObject(page2).getJSONObject("geometry").getJSONObject("location").getString("lat");
-                page3 = arr.getJSONObject(page2).getJSONObject("geometry").getJSONObject("location").getString("lng");
-                Bar result3 = new Bar((long)page2, data2, result2, "", arr2, page3);
-                bars.add(result3);
+            Boolean continuer = true;
+            while(continuer){
+                bars = buildBarFromArray(arr, bars);
+                try{
+                    /**
+                     * Permet de récuperer un token pour refaire une demande à l'api
+                     * Si  data.getString(next_page_token) renvoie une exception c'est qu'on a atteind la fin
+                     */
+                    String token = data.getString("next_page_token");
+                    System.out.println("url + \"&pagetoken=\" + token " +url + "&pagetoken=" + token;
+                    System.out.println("token : " + token);
+                    eget = googleBars.sendGet(url + "&pagetoken=" + token);
+                    data = new JSONObject(eget);
+                    System.out.println("DATA :" + data);
+                    arr = data.getJSONArray("results");
+                } catch (Exception e1){
+                    e1.printStackTrace();
+                    continuer = false;
+                }
             }
-
-            String var22 = data.getString("next_page_token");
-            Thread.sleep(2000L);
-            result2 = googleBars.sendGet(url + "&pagetoken=" + var22);
-            JSONObject var23 = new JSONObject(result2);
-            JSONArray var25 = var23.getJSONArray("results");
-
-            String var26;
-            for(int var24 = 0; var24 < var25.length(); ++var24) {
-                var26 = var25.getJSONObject(var24).getString("formatted_address");
-                String data3 = var25.getJSONObject(var24).getString("name");
-                String arr3 = var25.getJSONObject(var24).getJSONObject("geometry").getJSONObject("location").getString("lat");
-                String i = var25.getJSONObject(var24).getJSONObject("geometry").getJSONObject("location").getString("lng");
-                Bar address = new Bar((long)var24, data3, var26, "", arr3, i);
-                bars.add(address);
-            }
-
-            page3 = var23.getString("next_page_token");
-            System.out.println(page3);
-            Thread.sleep(2000L);
-            var26 = googleBars.sendGet(url + "&pagetoken=" + page3);
-            JSONObject var27 = new JSONObject(var26);
-            JSONArray var29 = var27.getJSONArray("results");
-
-            for(int var28 = 0; var28 < var29.length(); ++var28) {
-                String var30 = var29.getJSONObject(var28).getString("formatted_address");
-                String name = var29.getJSONObject(var28).getString("name");
-                String latitude = var29.getJSONObject(var28).getJSONObject("geometry").getJSONObject("location").getString("lat");
-                String longitude = var29.getJSONObject(var28).getJSONObject("geometry").getJSONObject("location").getString("lng");
-                Bar bar = new Bar((long)var28, name, var30, "", latitude, longitude);
-                bars.add(bar);
-            }
-
             System.out.println(bars);
-        } catch (Exception var21) {
-            var21.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
         return bars;
     }
+
+    public ArrayList<Bar> buildBarFromArray( JSONArray arr, ArrayList bars ) throws Exception {
+        System.out.println("Taille de la liste avant ajout : " + bars.size());
+        System.out.println(arr.toString());
+        Bar bar; String address; String name; String latitude; String longitude;
+        for(int i = 0; i < arr.length(); i++) {
+            address = arr.getJSONObject(i).getString("formatted_address");
+            name = arr.getJSONObject(i).getString("name");
+            latitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
+            longitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
+            bar = new Bar((long)i, name, address, "", latitude, longitude);
+            try{
+                String photoReference =  arr.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
+                bar.setUrl(DEBUT_URL_PHOTO_BAR + photoReference + FIN_URL_PHOTO_BAR);
+            }catch (Exception e1){
+            }
+            bars.add(bar);
+        }
+        System.out.println("Taille de la liste après ajout : "  + bars.size());
+        return bars;
+    }
+
+
 }
