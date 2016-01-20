@@ -4,31 +4,54 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@mipmap/wood_background"
+    android:weightSum="1">
 
-    <TextView
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/barathon"
-        android:id="@+id/barathon" />
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/logo_barathon" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.27"></FrameLayout>
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/action_showList"
-        android:id="@+id/viewList"
-        android:onClick="showList"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="225dp"
+        android:layout_height="80dp"
+        android:text="Bars"
+        android:id="@+id/button"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/wood_button"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#1e0606" />
 
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/action_showMap"
-        android:id="@+id/viewMap"
-        android:onClick="showMap"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_width="225dp"
+        android:layout_height="80dp"
+        android:text="Parcours"
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/wood_button"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#1e0606" />
+
+    <Button
+        android:layout_width="225dp"
+        android:layout_height="80dp"
+        android:text="Whatever"
+        android:id="@+id/button3"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/wood_button"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:textColor="#1e0606" />
 
 </LinearLayout>
