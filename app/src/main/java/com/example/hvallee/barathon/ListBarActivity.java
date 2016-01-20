@@ -1,11 +1,11 @@
 package com.example.hvallee.barathon;
 
+//import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -37,6 +37,14 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_bar);
+
+        // Masquer l'ActionBar
+        View decorView = getWindow().getDecorView();
+        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
+
 
         listView = (ListView) findViewById(R.id.listView1);
         swipeRefresh = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
@@ -74,7 +82,7 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 dataSource.open();
-                if(searchBox.getText().toString().equals("")){
+                if(searchBox.getText().toString().equals("")) {
                     bars = dataSource.getAllBars();
                 }
                 else {
