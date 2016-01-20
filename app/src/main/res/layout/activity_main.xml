@@ -42,7 +42,8 @@
         android:background="@mipmap/wood_button"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:textColor="#1e0606" />
+        android:textColor="#1e0606"
+        android:onClick="showListParcours"/>
 
     <Button
         android:layout_width="225dp"

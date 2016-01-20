@@ -81,4 +81,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), ListBarActivity.class);
         startActivity(intent);
     }
+
+    public void showListParcours(View view) {
+        Intent intent = new Intent(getApplicationContext(), ListParcoursActivity.class);
+        startActivity(intent);
+    }
 }

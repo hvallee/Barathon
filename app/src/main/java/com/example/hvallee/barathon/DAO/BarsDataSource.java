@@ -195,6 +195,25 @@ public class BarsDataSource {
         return parcours;
     }
 
+    public List<Parcours> getAllParcours() {
+        // On crée une List de parcours vide
+        List<Parcours> parcourses = new ArrayList<Parcours>();
+
+        // Une requête qui remplit le cursor
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS,
+                allColumnsParcours, null, null, null, null, null);
+        cursor.moveToFirst();
+        //Tant que le cursor n'est pas vide, on insère les Bars dans la liste
+        while (!cursor.isAfterLast()) {
+            Parcours parcours = cursorToParcours(cursor);
+            parcourses.add(parcours);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return parcourses;
+    }
+
     public Parcours getParcoursById(int id) {
         Parcours parcours = null;
         Cursor cursor = database.query(MySQLiteHelper.TABLE_PARCOURS, allColumnsParcours, MySQLiteHelper.COLUMN_ID_PARCOURS

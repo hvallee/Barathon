@@ -61,7 +61,7 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 long idBar = bars.get(position).getId();
-                Intent intentbardetail = new Intent(getApplication(), BarDetails.class);
+                Intent intentbardetail = new Intent(getApplication(), BarDetail.class);
                 intentbardetail.putExtra("id", idBar);
                 startActivity(intentbardetail);
             }
