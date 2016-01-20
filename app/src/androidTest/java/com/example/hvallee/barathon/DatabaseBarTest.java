@@ -79,4 +79,15 @@ public class DatabaseBarTest extends AndroidTestCase {
         Assert.assertEquals(bar3.getName(), "LESQUINADE");
         Assert.assertEquals(bar3.getPhone(), "0299311111");
     }
+
+    //@Test
+    public void searchTest(){
+        List<Bar> bars = dataSource.searchBarByString("PE");
+        Assert.assertEquals(bars.get(0).getName(), "LE PETIT VELO");
+
+        List<Bar> bars2 = dataSource.searchBarByString("WWWWWWWWWW");
+        Assert.assertEquals(bars2.get(0).getName(), "LESQUINADE");
+        Assert.assertEquals(bars2.get(0).getName(), "AAAA");
+        Assert.assertTrue(bars2.get(0).getName().equals("LE PETIT VELO"));
+    }
 }

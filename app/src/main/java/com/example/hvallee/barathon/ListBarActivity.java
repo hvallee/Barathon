@@ -4,9 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.baoyz.widget.PullRefreshLayout;
@@ -20,6 +24,7 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
 
     private BarsDataSource dataSource;
     private ListView listView;
+    private EditText searchBox;
     private ListBarAdapter adapter;
     private List<Bar> bars;
     private PullRefreshLayout swipeRefresh;
@@ -61,6 +66,25 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
             @Override
             public void onRefresh() {
                 new EndpointsAsyncTaskFetchBars(taskCompleted, context).execute();
+            }
+        });
+
+        searchBox = (EditText)findViewById(R.id.searchBox);
+        searchBox.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                dataSource.open();
+                if(searchBox.getText().toString().equals("")){
+                    bars = dataSource.getAllBars();
+                }
+                else {
+                    bars = dataSource.searchBarByString(searchBox.getText().toString());
+                }
+                adapter.clear();
+                adapter.setmListBars(bars);
+                adapter.notifyDataSetChanged();
+                dataSource.close();
+                return false;
             }
         });
     }

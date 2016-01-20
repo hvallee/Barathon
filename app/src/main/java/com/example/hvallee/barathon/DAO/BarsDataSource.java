@@ -129,6 +129,27 @@ public class BarsDataSource {
         return bar;
     }
 
+    public List<Bar> searchBarByString(String search) {
+        // On crée une List de Bar vide
+        List<Bar> bars = new ArrayList<Bar>();
+
+        // Une requête qui remplit le cursor
+        Cursor cursor = database.query(MySQLiteHelper.TABLE_BARS,
+                allColumnsBar, MySQLiteHelper.COLUMN_NAME
+                        + " LIKE \"%" + search + "%\"", null, null, null, null);
+        cursor.moveToFirst();
+        //Tant que le cursor n'est pas vide, on insère les Bars dans la liste
+        while (!cursor.isAfterLast()) {
+            Bar bar = cursorToBar(cursor);
+            bars.add(bar);
+            cursor.moveToNext();
+        }
+        // make sure to close the cursor
+        cursor.close();
+        return bars;
+    }
+
+
     private Bar cursorToBar(Cursor cursor) {
         // Création d'un nouveau bar à partir du cursor
         Bar bar = new Bar(cursor.getLong(0),

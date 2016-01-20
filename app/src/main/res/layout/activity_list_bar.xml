@@ -10,6 +10,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@mipmap/wood_background">
 
+    <EditText
+        android:id="@+id/searchBox"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:autoText="false"
+        android:background="#ffffff"
+        android:alpha="0.6"
+        android:textAlignment="gravity"
+        android:textSize="35dp"
+        android:hint="Chercher un bar"/>
+
     <com.baoyz.widget.PullRefreshLayout
         android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
