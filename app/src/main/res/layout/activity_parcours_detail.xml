@@ -35,4 +35,9 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="5dp" />
+
+    <ListView
+        android:id="@+id/parcours_bars_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"></ListView>
 </LinearLayout>

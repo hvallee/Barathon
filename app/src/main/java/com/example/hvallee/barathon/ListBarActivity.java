@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.example.hvallee.barathon.Adapter.ListBarAdapter;
@@ -58,13 +59,27 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
         adapter = new ListBarAdapter(bars, this);
         listView.setAdapter(adapter);
 
+        // Action d'un click sur la listview
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //On recup l'id de l'élément cliqué
                 long idBar = bars.get(position).getId();
+                // Creation d'un intent avec en extra l'id, puis start detail activity
                 Intent intentbardetail = new Intent(getApplication(), BarDetail.class);
                 intentbardetail.putExtra("id", idBar);
                 startActivity(intentbardetail);
+            }
+        });
+
+        // action d'un long click sur un item
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                //On recup l'id de l'élément cliqué
+                long idBar = bars.get(position).getId();
+                Toast.makeText(getApplicationContext(), "Yup. This is a long click", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 
