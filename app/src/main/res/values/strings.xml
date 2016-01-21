@@ -9,6 +9,7 @@
 
     <string name="title_activity_list_bar">ListBarActivity</string>
 
+    <string name="bars">Bars</string>
     <string name="listeBars">Liste Bars</string>
     <string name="aroundMe">Autour de moi</string>
 
@@ -17,4 +18,10 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_recycler_view_activity">Recycler_view_activity</string>
+
+    <string name="create_parcours">Créer un nouveau barathon</string>
+    <string name="name_new_parcours">Nom du nouveau parcours :</string>
+    <string name="description_new_parcours">Description du nouveau parcours :</string>
+    <string name="button_create_parcours">Valider</string>
+
 </resources>

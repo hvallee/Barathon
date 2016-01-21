@@ -4,8 +4,18 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.hvallee.barathon.DAO.BarsDataSource;
+import com.example.hvallee.barathon.Model.Parcours;
 
 public class CreateParcours extends AppCompatActivity {
+
+    private BarsDataSource dataSource;
+    private EditText name;
+    private EditText description;
+    private Button validate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,5 +29,23 @@ public class CreateParcours extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
+        dataSource = new BarsDataSource(this);
+        dataSource.open();
+
+        name = (EditText)findViewById(R.id.name_new_parcours);
+        description = (EditText)findViewById(R.id.desc_new_parcours);
+        validate = (Button)findViewById(R.id.button_validate);
+
+        validate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Parcours p = dataSource.createParcours(name.getText().toString(), description.getText().toString());
+
+                if(p != null) {
+                    dataSource.close();
+                    finish();
+                }
+            }
+        });
     }
 }

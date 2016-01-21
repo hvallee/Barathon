@@ -47,7 +47,6 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-
         listView = (ListView) findViewById(R.id.listView1);
         swipeRefresh = (PullRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 

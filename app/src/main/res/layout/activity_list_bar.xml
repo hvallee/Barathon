@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="65dp"
-        android:text="BARS"
+        android:text="@string/bars"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:background="@mipmap/scroll"
