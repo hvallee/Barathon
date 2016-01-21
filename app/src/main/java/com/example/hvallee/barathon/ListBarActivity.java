@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -78,7 +80,35 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
         });
 
         searchBox = (EditText)findViewById(R.id.searchBox);
-        searchBox.setOnKeyListener(new View.OnKeyListener() {
+        searchBox.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                dataSource.open();
+                if(searchBox.getText().toString().equals("")) {
+                    bars = dataSource.getAllBars();
+                }
+                else {
+                    bars = dataSource.searchBarByString(searchBox.getText().toString());
+                }
+                adapter.clear();
+                adapter.setmListBars(bars);
+                adapter.notifyDataSetChanged();
+                dataSource.close();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+                /*
+                setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 dataSource.open();
@@ -94,7 +124,7 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
                 dataSource.close();
                 return false;
             }
-        });
+        });*/
     }
 
     @Override
