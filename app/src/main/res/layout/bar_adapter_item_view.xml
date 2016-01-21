@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="wrap_content"
-    android:layout_height="350dp"
-    android:weightSum="1">
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@mipmap/sign">
-
-        <ImageView
-            android:id="@+id/bar_image"
-            android:layout_width="167dp"
-            android:layout_height="140dp"
-            android:layout_gravity="center" />
-    </FrameLayout>
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:weightSum="1"
+    android:background="@mipmap/scroll_item">
 
     <TextView
         android:id="@+id/bar_name"
-        android:layout_width="match_parent"
-        android:layout_height="79dp"
-        android:background="@mipmap/sign"
+        android:layout_width="267dp"
+        android:layout_height="100dp"
         android:textStyle="bold"
         android:textSize="30dp"
         android:textAlignment="center"
-        android:layout_margin="10dp" />
+        android:gravity="center_vertical"
+        android:paddingLeft="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/bar_image"
+        android:layout_toEndOf="@+id/bar_image"
+        android:paddingTop="10dp" />
 
     <TextView
         android:id="@+id/bar_address"
-        android:layout_width="match_parent"
-        android:layout_height="84dp"
-        android:background="@mipmap/sign"
-        android:layout_margin="10dp"
+        android:layout_width="164dp"
+        android:layout_height="150dp"
         android:textAlignment="center"
         android:textStyle="bold"
-        android:textSize="30dp" />
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/bar_name"
+        android:layout_alignEnd="@+id/bar_name"
+        android:layout_toRightOf="@+id/bar_image"
+        android:layout_toEndOf="@+id/bar_image"
+        android:padding="10dp"
+        android:layout_below="@+id/bar_name" />
 
-</LinearLayout>
+    <ImageView
+        android:id="@+id/bar_image"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="right|top"
+        android:padding="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@mipmap/sign_square" />
+
+</RelativeLayout>

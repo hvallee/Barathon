@@ -9,19 +9,30 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.hvallee.barathon.ParcoursDetail"
     android:orientation="vertical"
-    android:background="@mipmap/wood_background">
+    android:background="@mipmap/wood_background"
+    android:weightSum="1">
 
     <TextView
         android:id="@+id/parcoursNameDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#fffefe"
-        android:textSize="30dp"/>
+        android:textColor="#fff"
+        android:textSize="30dp"
+        android:background="@mipmap/sign"
+        android:layout_gravity="center"
+        android:textAlignment="gravity"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:padding="5dp" />
 
     <TextView
         android:id="@+id/parcoursDescriptionDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#fffefe"
-        android:textSize="20dp"/>
+        android:textColor="#fff"
+        android:textSize="15dp"
+        android:background="@mipmap/sign"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="5dp" />
 </LinearLayout>

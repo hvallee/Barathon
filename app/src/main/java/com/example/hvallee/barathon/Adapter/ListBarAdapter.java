@@ -62,7 +62,7 @@ public class ListBarAdapter extends BaseAdapter {
         myViewHolder.barImage = (ImageView)row.findViewById(R.id.bar_image);
         myViewHolder.barName.setText(mListBars.get(position).getName());
         myViewHolder.barAddress.setText(mListBars.get(position).getAddress());
-        Picasso.with(mContext).load(mListBars.get(position).getUrl()).resize(50, 50).into(myViewHolder.barImage);
+        Picasso.with(mContext).load(mListBars.get(position).getUrl()).resize(200, 200).into(myViewHolder.barImage);
 
         setId(mListBars.get(position).getId());
 

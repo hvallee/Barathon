@@ -10,27 +10,55 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@mipmap/wood_background">
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="65dp"
+        android:text="BARS"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/scroll"
+        android:textColor="#000"
+        android:gravity="center"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/searchBox"
         android:layout_width="match_parent"
-        android:layout_height="49dp"
+        android:layout_height="40dp"
         android:autoText="false"
         android:background="#ffffff"
         android:alpha="0.6"
         android:textAlignment="gravity"
-        android:textSize="35dp"
-        android:hint="Chercher un bar"/>
+        android:textSize="20dp"
+        android:hint="Chercher un bar"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp" />
 
-    <com.baoyz.widget.PullRefreshLayout
-        android:id="@+id/swipeRefreshLayout"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ListView
-            android:id="@+id/listView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" ></ListView>
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="5dp"
+            android:id="@+id/imageView3"
+            android:background="#010101" />
 
-    </com.baoyz.widget.PullRefreshLayout>
+        <com.baoyz.widget.PullRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent">
+
+            <ListView
+                android:id="@+id/listView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" ></ListView>
+
+        </com.baoyz.widget.PullRefreshLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
