@@ -66,4 +66,20 @@ public class ListParcoursActivity extends AppCompatActivity {
         });
 
     }
+
+    // Refresh the list by recall the method whom get the parcours list
+    public void refresh(){
+        dataSource.open();
+        parcourses = dataSource.getAllParcours();
+        adapter.clear();
+        adapter.setmListParcours(parcourses);
+        adapter.notifyDataSetChanged();
+        dataSource.close();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refresh();
+    }
 }
