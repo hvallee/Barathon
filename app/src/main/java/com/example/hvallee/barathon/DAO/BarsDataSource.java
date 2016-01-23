@@ -177,6 +177,12 @@ public class BarsDataSource {
         contentValues.put(MySQLiteHelper.COLUMN_NAME_PARCOURS, name);
         contentValues.put(MySQLiteHelper.COLUMN_DESCRIPTION_PARCOURS, description);
 
+        // Controle qu'un parcours avec ce nom n'existe pas déjà.
+        List<Parcours> parcourses = getAllParcours();
+        if(parcourses.contains(name)){
+            return null;
+        }
+
         // Requête d'insertion qui renvoit l'id de l'objet créé
         Long insertId = database.insert(MySQLiteHelper.TABLE_PARCOURS, null, contentValues);
 

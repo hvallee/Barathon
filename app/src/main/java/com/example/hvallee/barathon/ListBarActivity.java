@@ -1,6 +1,5 @@
 package com.example.hvallee.barathon;
 
-//import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,14 +7,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.ContextMenu;
-import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.example.hvallee.barathon.Adapter.ListBarAdapter;
@@ -27,13 +26,15 @@ import java.util.List;
 
 public class ListBarActivity extends AppCompatActivity implements OnTaskCompleted {
 
+    private final static String LOG_TAG = ListBarActivity.class.getSimpleName();
+
     private BarsDataSource dataSource;
     private ListView listView;
     private EditText searchBox;
     private ListBarAdapter adapter;
     private List<Bar> bars;
+    private List<Parcours> parcourses;
     private PullRefreshLayout swipeRefresh;
-    private EndpointsAsyncTaskFetchBars asyncTask;
 
     private Context context;
     private OnTaskCompleted taskCompleted;
@@ -56,6 +57,7 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
         dataSource = new BarsDataSource(this);
         dataSource.open();
         bars = dataSource.getAllBars();
+        parcourses = dataSource.getAllParcours();
         dataSource.close();
 
         adapter = new ListBarAdapter(bars, this);
@@ -95,10 +97,9 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 dataSource.open();
-                if(searchBox.getText().toString().equals("")) {
+                if (searchBox.getText().toString().equals("")) {
                     bars = dataSource.getAllBars();
-                }
-                else {
+                } else {
                     bars = dataSource.searchBarByString(searchBox.getText().toString());
                 }
                 adapter.clear();
@@ -125,11 +126,25 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle("Ajouter le bar à un barathon");
-        dataSource.open();
-        List<Parcours> parcourses = dataSource.getAllParcours();
+
         for(Parcours p : parcourses){
             menu.add(0, v.getId(), 0, p.getName());//groupId, itemId, order, title
         }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        int index = info.position;
+
+        for(Parcours p : parcourses){
+            if(item.getTitle().toString().equals(p.getName())) {
+                dataSource.open();
+                dataSource.insertBarIntoParcours(index,(int)p.getId());
+                dataSource.close();
+            }
+        }
+        return super.onContextItemSelected(item);
     }
 
     // Callback lorsque l'asynctask est terminée

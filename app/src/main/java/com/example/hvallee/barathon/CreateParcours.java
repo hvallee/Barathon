@@ -1,11 +1,13 @@
 package com.example.hvallee.barathon;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Parcours;
@@ -44,6 +46,9 @@ public class CreateParcours extends AppCompatActivity {
                 if(p != null) {
                     dataSource.close();
                     finish();
+                }
+                else {
+                    Toast.makeText(getApplicationContext(), "Impossible de créer le parcours, un parcours portant ce nom existe déjà !", Toast.LENGTH_SHORT);
                 }
             }
         });
