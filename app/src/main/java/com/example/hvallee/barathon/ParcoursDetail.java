@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.hvallee.barathon.Adapter.ListBarInsideAdapter;
 import com.example.hvallee.barathon.DAO.BarsDataSource;
@@ -53,9 +54,14 @@ public class ParcoursDetail extends AppCompatActivity {
 
         List<Bar> barList = dataSource.getAllBarsOfParcours((int)p.getId());
 
-        mListView = (ListView) findViewById(R.id.parcours_bars_list);
-        adapter = new ListBarInsideAdapter(barList, getApplicationContext());
-        mListView.setAdapter(adapter);
+        if (barList.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Il n'y a rien ici ! Rendez-vous sur la liste des bars pour en ajouter.", Toast.LENGTH_LONG).show();
+        }
+        else {
+            mListView = (ListView) findViewById(R.id.parcours_bars_list);
+            adapter = new ListBarInsideAdapter(barList, getApplicationContext());
+            mListView.setAdapter(adapter);
+        }
 
         // Close du helper sqlite
         dataSource.close();
