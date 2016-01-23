@@ -48,7 +48,7 @@ public class CreateParcours extends AppCompatActivity {
                     finish();
                 }
                 else {
-                    Toast.makeText(getApplicationContext(), "Impossible de créer le parcours, un parcours portant ce nom existe déjà !", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), "Impossible de créer le parcours, un parcours portant ce nom existe déjà !", Toast.LENGTH_SHORT).show();
                 }
             }
         });

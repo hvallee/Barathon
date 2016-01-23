@@ -179,8 +179,11 @@ public class BarsDataSource {
 
         // Controle qu'un parcours avec ce nom n'existe pas déjà.
         List<Parcours> parcourses = getAllParcours();
-        if(parcourses.contains(name)){
-            return null;
+
+        for(Parcours p : parcourses) {
+            if(p.getName().equals(name)){
+                return null;
+            }
         }
 
         // Requête d'insertion qui renvoit l'id de l'objet créé
