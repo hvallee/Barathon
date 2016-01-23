@@ -1,66 +1,58 @@
 package com.example.hvallee.barathon;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class BarDetail extends AppCompatActivity {
+public class BarDetail extends FragmentActivity implements OnMapReadyCallback {
+
+    private TextView vNom;
+    private TextView vAdresse;
+    private TextView vNum;
+    private Bar b;
+    private BarsDataSource barSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_detail);
 
-        // Masquer l'ActionBar
-        View decorView = getWindow().getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
+        // Get the extra "id" added through the intent
         long i = getIntent().getLongExtra("id", 0);
-        // context = getApplication()
-        BarsDataSource barSource = new BarsDataSource(getBaseContext());
-        barSource.open();
-        Bar b = barSource.getBarById((int)i);
-        TextView vNom = (TextView)findViewById(R.id.NomBarDetail);
-        TextView vAdresse = (TextView)findViewById(R.id.AdresseBarDetail);
-        TextView vNum = (TextView)findViewById(R.id.NumBarDetail);
 
+        barSource = new BarsDataSource(getBaseContext());
+        barSource.open();
+        b = barSource.getBarById((int)i);
+
+        // Get and Set the textarea
+        vNom = (TextView)findViewById(R.id.NomBarDetail);
+        vAdresse = (TextView)findViewById(R.id.AdresseBarDetail);
+        vNum = (TextView)findViewById(R.id.NumBarDetail);
         vNom.setText(b.getName());
         vAdresse.setText(b.getAddress());
         vNum.setText(b.getPhone());
 
+        // Get the map and call the getMapAsync, see onMapReady.
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        // Close the database source
         barSource.close();
-
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_bar_details, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    public void onMapReady(GoogleMap googleMap) {
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())))
+                .title(b.getName()));
     }
 }
