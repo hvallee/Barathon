@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
@@ -20,6 +21,7 @@ import com.baoyz.widget.PullRefreshLayout;
 import com.example.hvallee.barathon.Adapter.ListBarAdapter;
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
+import com.example.hvallee.barathon.Model.Parcours;
 
 import java.util.List;
 
@@ -58,6 +60,7 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
 
         adapter = new ListBarAdapter(bars, this);
         listView.setAdapter(adapter);
+        registerForContextMenu(listView);
 
         // Action d'un click sur la listview
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -69,17 +72,6 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
                 Intent intentbardetail = new Intent(getApplication(), BarDetail.class);
                 intentbardetail.putExtra("id", idBar);
                 startActivity(intentbardetail);
-            }
-        });
-
-        // action d'un long click sur un item
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                //On recup l'id de l'élément cliqué
-                long idBar = bars.get(position).getId();
-                Toast.makeText(getApplicationContext(), "Yup. This is a long click", Toast.LENGTH_SHORT).show();
-                return false;
             }
         });
 
@@ -120,25 +112,6 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
 
             }
         });
-
-                /*
-                setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                dataSource.open();
-                if(searchBox.getText().toString().equals("")) {
-                    bars = dataSource.getAllBars();
-                }
-                else {
-                    bars = dataSource.searchBarByString(searchBox.getText().toString());
-                }
-                adapter.clear();
-                adapter.setmListBars(bars);
-                adapter.notifyDataSetChanged();
-                dataSource.close();
-                return false;
-            }
-        });*/
     }
 
     @Override
@@ -146,6 +119,17 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle("Ajouter le bar à un barathon");
+        dataSource.open();
+        List<Parcours> parcourses = dataSource.getAllParcours();
+        for(Parcours p : parcourses){
+            menu.add(0, v.getId(), 0, p.getName());//groupId, itemId, order, title
+        }
     }
 
     // Callback lorsque l'asynctask est terminée
