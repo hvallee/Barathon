@@ -135,15 +135,20 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
         int index = info.position;
+
+        dataSource.open();
 
         for(Parcours p : parcourses){
             if(item.getTitle().toString().equals(p.getName())) {
-                dataSource.open();
-                dataSource.insertBarIntoParcours(index,(int)p.getId());
-                dataSource.close();
+                Long id = dataSource.insertBarIntoParcours((int)p.getId(),index+1);
+                Log.d(LOG_TAG, "Insertion bar: " + index + " into parcours: " + p.getId() + " with id: " + id);
             }
         }
+
+        dataSource.close();
+
         return super.onContextItemSelected(item);
     }
 

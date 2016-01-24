@@ -43,7 +43,6 @@ public class ListParcoursActivity extends AppCompatActivity {
         parcourses = dataSource.getAllParcours();
         dataSource.close();
 
-
         adapter = new ListParcoursAdapter(parcourses, this);
         listView.setAdapter(adapter);
 
