@@ -169,6 +169,10 @@ public class DatabaseParcourTest extends AndroidTestCase {
         datasource.insertBarIntoParcours(1, 2);
         datasource.insertBarIntoParcours(1, 3);
 
+        // Test du nombre de bars dans ce parcours.
+        int nbbar = datasource.getNumberOfBar(1);
+        Assert.assertEquals(nbbar,3);
+
         // Puis on supprime le parcours
         datasource.deleteParcours(parcours);
 

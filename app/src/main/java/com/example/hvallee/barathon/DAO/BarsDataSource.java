@@ -277,4 +277,11 @@ public class BarsDataSource {
         // Puis le parcours lui même
         database.delete(MySQLiteHelper.TABLE_PARCOURS, MySQLiteHelper.COLUMN_ID_PARCOURS + " = " + parcours.getId(), null);
     }
+
+    public int getNumberOfBar(int parcoursId){
+        String countQuery = "SELECT * FROM " + MySQLiteHelper.TABLE_BARS_PARCOURS + " WHERE " + MySQLiteHelper.COLUMN_PARCOURS_ID + "=" + parcoursId;
+        Cursor cursor = database.rawQuery(countQuery, null);
+        int cnt = cursor.getCount();
+        return cnt;
+    }
 }
