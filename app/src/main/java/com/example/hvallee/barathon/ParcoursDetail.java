@@ -59,7 +59,7 @@ public class ParcoursDetail extends AppCompatActivity {
         }
         else {
             mListView = (ListView) findViewById(R.id.parcours_bars_list);
-            adapter = new ListBarInsideAdapter(barList, getApplicationContext());
+            adapter = new ListBarInsideAdapter(barList, getApplicationContext(), (int)i);
             mListView.setAdapter(adapter);
         }
 
