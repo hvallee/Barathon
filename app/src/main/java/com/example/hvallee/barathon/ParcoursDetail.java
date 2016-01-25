@@ -3,6 +3,7 @@ package com.example.hvallee.barathon;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -65,5 +66,12 @@ public class ParcoursDetail extends AppCompatActivity {
 
         // Close du helper sqlite
         dataSource.close();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.setHeaderTitle(" test ");
+        menu.add(0, v.getId(), 0, "test");//groupId, itemId, order, title
     }
 }

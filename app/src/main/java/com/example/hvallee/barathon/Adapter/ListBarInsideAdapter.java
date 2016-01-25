@@ -1,6 +1,7 @@
 package com.example.hvallee.barathon.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +74,12 @@ public class ListBarInsideAdapter extends BaseAdapter {
         myViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                refresh();
+                datasource.open();
+                datasource.deleteBarInParcours(parcoursId, (int) mListBars.get(position).getId());
+                mListBars.clear();
+                setmListBars(datasource.getAllBarsOfParcours(parcoursId));
+                //refresh();
+                ListBarInsideAdapter.this.notifyDataSetChanged();
             }
         });
 
@@ -84,8 +89,6 @@ public class ListBarInsideAdapter extends BaseAdapter {
     }
 
     public void refresh(){
-        mListBars.clear();
-        setmListBars(datasource.getAllBarsOfParcours(parcoursId));
         this.notifyDataSetChanged();
     }
 
