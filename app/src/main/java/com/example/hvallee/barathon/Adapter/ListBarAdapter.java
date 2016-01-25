@@ -41,7 +41,7 @@ public class ListBarAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Bar getItem(int position) {
         return mListBars.get(position);
     }
 

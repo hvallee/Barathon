@@ -138,11 +138,13 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
 
         int index = info.position;
 
+        Bar bar = adapter.getItem(index);
+
         dataSource.open();
 
         for(Parcours p : parcourses){
             if(item.getTitle().toString().equals(p.getName())) {
-                Long id = dataSource.insertBarIntoParcours((int)p.getId(),index+1);
+                Long id = dataSource.insertBarIntoParcours((int)p.getId(),(int)bar.getId());
                 Log.d(LOG_TAG, "Insertion bar: " + index + " into parcours: " + p.getId() + " with id: " + id);
             }
         }

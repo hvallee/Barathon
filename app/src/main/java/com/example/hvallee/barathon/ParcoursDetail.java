@@ -1,10 +1,12 @@
 package com.example.hvallee.barathon;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ContextMenu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class ParcoursDetail extends AppCompatActivity {
     private ListView mListView;
     private ListBarInsideAdapter adapter;
     private BarsDataSource dataSource;
+    private List<Bar> barList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +56,29 @@ public class ParcoursDetail extends AppCompatActivity {
         name.setText(p.getName());
         description.setText(p.getDescription());
 
-        List<Bar> barList = dataSource.getAllBarsOfParcours((int)p.getId());
+        barList = dataSource.getAllBarsOfParcours((int)p.getId());
+
+        mListView = (ListView) findViewById(R.id.parcours_bars_list);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "élément cliqué : " + barList.get(position).getId(), Toast.LENGTH_SHORT).show();
+                    /*
+                    //On recup l'id de l'élément cliqué
+                    long idBar = barList.get(position).getId();
+                    // Creation d'un intent avec en extra l'id, puis start detail activity
+                    Intent intentbardetail = new Intent(getApplication(), BarDetail.class);
+                    intentbardetail.putExtra("id", idBar);
+                    startActivity(intentbardetail);
+                    */
+            }
+        });
+
 
         if (barList.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Il n'y a rien ici ! Rendez-vous sur la liste des bars pour en ajouter.", Toast.LENGTH_LONG).show();
         }
         else {
-            mListView = (ListView) findViewById(R.id.parcours_bars_list);
             adapter = new ListBarInsideAdapter(barList, getApplicationContext(), (int)i);
             mListView.setAdapter(adapter);
         }
