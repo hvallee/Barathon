@@ -37,7 +37,7 @@
     <Button
         android:layout_width="225dp"
         android:layout_height="80dp"
-        android:text="Parcours"
+        android:text="Barathons"
         android:id="@+id/button2"
         android:layout_gravity="center_horizontal"
         android:background="@mipmap/wood_button"
@@ -45,16 +45,5 @@
         android:textStyle="bold"
         android:textColor="#1e0606"
         android:onClick="showListParcours"/>
-
-    <Button
-        android:layout_width="225dp"
-        android:layout_height="80dp"
-        android:text="Whatever"
-        android:id="@+id/button3"
-        android:layout_gravity="center_horizontal"
-        android:background="@mipmap/wood_button"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:textColor="#1e0606" />
 
 </LinearLayout>
