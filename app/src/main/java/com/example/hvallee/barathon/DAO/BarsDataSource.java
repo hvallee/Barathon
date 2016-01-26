@@ -246,9 +246,9 @@ public class BarsDataSource {
         return insertId;
     }
 
-    public void deleteBarInParcours(Parcours parcours, Bar bar) {
+    public void deleteBarInParcours(int parcoursId, int barId) {
         database.delete(MySQLiteHelper.TABLE_BARS_PARCOURS,
-                MySQLiteHelper.COLUMN_PARCOURS_ID + " = " + parcours.getId() + " AND " + MySQLiteHelper.COLUMN_BARS_ID +  "=" + bar.getId(), null);
+                MySQLiteHelper.COLUMN_PARCOURS_ID + " = " + parcoursId + " AND " + MySQLiteHelper.COLUMN_BARS_ID +  "=" + barId, null);
     }
 
     public List<Bar> getAllBarsOfParcours(int idParcours) {

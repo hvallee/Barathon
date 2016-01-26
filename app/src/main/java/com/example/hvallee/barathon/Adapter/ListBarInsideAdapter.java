@@ -1,6 +1,7 @@
 package com.example.hvallee.barathon.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
+import com.example.hvallee.barathon.Model.Parcours;
 import com.example.hvallee.barathon.R;
 import com.squareup.picasso.Picasso;
 
@@ -25,12 +28,15 @@ public class ListBarInsideAdapter extends BaseAdapter {
 
     private List<Bar> mListBars;
     private Context mContext;
+    private int parcoursId;
     private Long id;
     private int pos;
+    private BarsDataSource datasource;
 
-    public ListBarInsideAdapter(List<Bar> bars, Context context) {
+    public ListBarInsideAdapter(List<Bar> bars, Context context, int parcoursId) {
         mListBars = bars;
         mContext = context;
+        this.parcoursId = parcoursId;
     }
 
     @Override
@@ -49,13 +55,14 @@ public class ListBarInsideAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         MyViewHolder myViewHolder = new MyViewHolder();
-
-        pos = position;
 
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View row = inflater.inflate(R.layout.bar_adapter_item_view_inside, null);
+
+        datasource = new BarsDataSource(mContext);
+        datasource.open();
 
         myViewHolder.barName = (TextView)row.findViewById(R.id.bar_name);
         myViewHolder.barAddress = (TextView)row.findViewById(R.id.bar_address);
@@ -67,12 +74,22 @@ public class ListBarInsideAdapter extends BaseAdapter {
         myViewHolder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "This the item number :"+pos,Toast.LENGTH_SHORT).show();
+                datasource.open();
+                datasource.deleteBarInParcours(parcoursId, (int) mListBars.get(position).getId());
+                mListBars.clear();
+                setmListBars(datasource.getAllBarsOfParcours(parcoursId));
+                //refresh();
+                ListBarInsideAdapter.this.notifyDataSetChanged();
             }
         });
 
         setId(mListBars.get(position).getId());
+        datasource.close();
         return row;
+    }
+
+    public void refresh(){
+        this.notifyDataSetChanged();
     }
 
     private static class MyViewHolder {
