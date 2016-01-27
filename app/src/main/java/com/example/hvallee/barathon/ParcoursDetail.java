@@ -59,6 +59,8 @@ public class ParcoursDetail extends AppCompatActivity {
         barList = dataSource.getAllBarsOfParcours((int)p.getId());
 
         mListView = (ListView) findViewById(R.id.parcours_bars_list);
+        adapter = new ListBarInsideAdapter(barList, getApplicationContext(), (int)i);
+        mListView.setAdapter(adapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -74,13 +76,8 @@ public class ParcoursDetail extends AppCompatActivity {
             }
         });
 
-
         if (barList.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Il n'y a rien ici ! Rendez-vous sur la liste des bars pour en ajouter.", Toast.LENGTH_LONG).show();
-        }
-        else {
-            adapter = new ListBarInsideAdapter(barList, getApplicationContext(), (int)i);
-            mListView.setAdapter(adapter);
         }
 
         // Close du helper sqlite
