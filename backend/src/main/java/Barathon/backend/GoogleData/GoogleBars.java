@@ -124,7 +124,7 @@ public class GoogleBars {
                      * Si  data.getString(next_page_token) renvoie une exception c'est qu'on a atteind la fin
                      */
                     String token = data.getString("next_page_token");
-                    System.out.println("url + \"&pagetoken=\" + token " +url + "&pagetoken=" + token;
+                    System.out.println("url + \"&pagetoken=\" + token " +url + "&pagetoken=" + token);
                     System.out.println("token : " + token);
                     eget = googleBars.sendGet(url + "&pagetoken=" + token);
                     data = new JSONObject(eget);

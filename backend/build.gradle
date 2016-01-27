@@ -23,6 +23,7 @@ targetCompatibility = JavaVersion.VERSION_1_7
 
 dependencies {
     appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.18'
+    compile 'org.hibernate:hibernate-entitymanager:4.1.7.Final'
     compile 'com.google.appengine:appengine-endpoints:1.9.18'
     compile 'com.google.appengine:appengine-endpoints-deps:1.9.18'
     compile 'javax.servlet:servlet-api:2.5'

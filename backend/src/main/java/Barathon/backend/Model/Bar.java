@@ -1,8 +1,11 @@
 package Barathon.backend.Model;
 
+import javax.persistence.*;
+
 /**
  * Created by samyabh on 19/10/2015.
  */
+@Entity
 public class Bar {
     private final String URL_IMAGE_DE_BASE = "http://pngimg.com/upload/beer_PNG2362.png";
     private long id;
@@ -12,6 +15,7 @@ public class Bar {
     private String latitude;
     private String longitude;
     private String url = URL_IMAGE_DE_BASE;
+    private String description;
 
     public Bar() {
     }
@@ -35,6 +39,10 @@ public class Bar {
         this.url = url;
     }
 
+
+    @Id
+    //@GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     public long getId() {
         return id;
     }
@@ -84,6 +92,13 @@ public class Bar {
     }
 
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
     public String getUrl() {
         return url;
     }
