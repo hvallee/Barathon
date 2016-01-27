@@ -7,7 +7,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".15">
+        android:layout_weight=".15"
+        android:padding="4dp">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -43,7 +44,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight=".85">
+        android:layout_weight=".85"
+        android:paddingTop="10dp"
+        android:paddingRight="10dp">
 
         <Button
             android:id="@+id/delete_button"

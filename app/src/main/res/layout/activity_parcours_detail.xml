@@ -12,40 +12,52 @@
     android:background="@mipmap/wood_background"
     android:weightSum="1">
 
-    <TextView
-        android:id="@+id/parcoursNameDetail"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:textSize="30dp"
-        android:background="@mipmap/scroll"
-        android:layout_gravity="center"
-        android:textAlignment="gravity"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:padding="5dp" />
+        android:background="@mipmap/scroll">
 
-    <TextView
-        android:id="@+id/parcoursDescriptionDetail"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:textColor="#000"
-        android:textSize="15dp"
-        android:background="@mipmap/scroll"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="5dp" />
+        <TextView
+            android:id="@+id/parcoursNameDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:textSize="30dp"
+            android:layout_gravity="center"
+            android:textAlignment="gravity"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:padding="5dp" />
+
+        <TextView
+            android:id="@+id/parcoursDescriptionDetail"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textColor="#000"
+            android:textSize="15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="5dp" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/parcours_bars_list"
         android:layout_width="wrap_content"
         android:layout_height="148dp"></ListView>
 
-    <fragment
-        android:name="com.google.android.gms.maps.MapFragment"
-        android:id="@+id/map"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="30dp"
-        android:layout_gravity="center_horizontal" />
+        android:background="@mipmap/scroll_item">
+
+        <fragment
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="30dp"
+            android:layout_gravity="center_horizontal" />
+    </FrameLayout>
+
 </LinearLayout>
