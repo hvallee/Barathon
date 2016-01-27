@@ -39,5 +39,13 @@
     <ListView
         android:id="@+id/parcours_bars_list"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"></ListView>
+        android:layout_height="148dp"></ListView>
+
+    <fragment
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:layout_gravity="center_horizontal" />
 </LinearLayout>

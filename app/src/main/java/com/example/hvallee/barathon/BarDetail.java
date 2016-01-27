@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -54,5 +55,10 @@ public class BarDetail extends FragmentActivity implements OnMapReadyCallback {
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())))
                 .title(b.getName()));
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())), 15));
+        // Zoom in, animating the camera.
+        googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+        // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15), 1000, null);
     }
 }
