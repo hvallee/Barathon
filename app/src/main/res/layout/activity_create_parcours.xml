@@ -28,14 +28,15 @@
         android:layout_height="wrap_content"
         android:text="@string/name_new_parcours"
         android:textSize="20dp"
-        android:textColor="#ffffff"
-        android:paddingTop="15dp" />
+        android:textColor="#FFF"
+        android:paddingTop="15dp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/name_new_parcours"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff" />
+        android:textColor="#FFF" />
 
     <TextView
         android:layout_width="match_parent"
@@ -43,12 +44,14 @@
         android:text="@string/description_new_parcours"
         android:textSize="20dp"
         android:paddingTop="15dp"
-        android:textColor="#ffffff" />
+        android:textColor="#FFF"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/desc_new_parcours"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textColor="#FFF" />
 
     <Button
         android:id="@+id/button_validate"

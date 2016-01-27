@@ -1,9 +1,12 @@
 package com.example.hvallee.barathon;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,11 +19,18 @@ import com.example.hvallee.barathon.Adapter.ListBarInsideAdapter;
 import com.example.hvallee.barathon.DAO.BarsDataSource;
 import com.example.hvallee.barathon.Model.Bar;
 import com.example.hvallee.barathon.Model.Parcours;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParcoursDetail extends AppCompatActivity {
+public class ParcoursDetail extends FragmentActivity implements OnMapReadyCallback {
 
     private TextView name;
     private TextView description;
@@ -38,8 +48,8 @@ public class ParcoursDetail extends AppCompatActivity {
         View decorView = getWindow().getDecorView();
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+       /* ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();*/
 
         // On récup les éléments de la vue
         name = (TextView)findViewById(R.id.parcoursNameDetail);
@@ -80,6 +90,10 @@ public class ParcoursDetail extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Il n'y a rien ici ! Rendez-vous sur la liste des bars pour en ajouter.", Toast.LENGTH_LONG).show();
         }
 
+        // Get the map and call the getMapAsync, see onMapReady.
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
         // Close du helper sqlite
         dataSource.close();
     }
@@ -89,5 +103,31 @@ public class ParcoursDetail extends AppCompatActivity {
         super.onCreateContextMenu(menu, v, menuInfo);
         menu.setHeaderTitle(" test ");
         menu.add(0, v.getId(), 0, "test");//groupId, itemId, order, title
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        boolean first = true;
+        PolylineOptions line = new PolylineOptions();
+        line.color(Color.RED);
+        for(Bar b: barList) {
+            googleMap.addMarker(new MarkerOptions()
+                    .position(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())))
+                    .title(b.getName()));
+            line.add(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())));
+
+            if(first) {
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())), 15));
+                // Zoom in, animating the camera.
+                googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+                // Zoom out to zoom level 10, animating with a duration of 2 seconds.
+                googleMap.animateCamera(CameraUpdateFactory.zoomTo(12), 1000, null);
+                first = false;
+            }
+
+        }
+        googleMap.addPolyline(line);
+
+
     }
 }
