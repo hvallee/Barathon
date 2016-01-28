@@ -116,8 +116,10 @@ public class GoogleBars {
             JSONObject data = new JSONObject(eget);
             JSONArray arr = data.getJSONArray("results");
             Boolean continuer = true;
+            int cpt = 0;
             while(continuer){
-                bars = buildBarFromArray(arr, bars);
+                bars = buildBarFromArray(arr, bars, cpt);
+                cpt ++;
                 try{
                     /**
                      * Permet de récuperer un token pour refaire une demande à l'api
@@ -126,6 +128,7 @@ public class GoogleBars {
                     String token = data.getString("next_page_token");
                     System.out.println("url + \"&pagetoken=\" + token " +url + "&pagetoken=" + token);
                     System.out.println("token : " + token);
+                    Thread.sleep(2000L);
                     eget = googleBars.sendGet(url + "&pagetoken=" + token);
                     data = new JSONObject(eget);
                     System.out.println("DATA :" + data);
@@ -142,7 +145,8 @@ public class GoogleBars {
         return bars;
     }
 
-    public ArrayList<Bar> buildBarFromArray( JSONArray arr, ArrayList bars ) throws Exception {
+    public ArrayList<Bar> buildBarFromArray( JSONArray arr, ArrayList bars, int cpt ) throws Exception {
+
         System.out.println("Taille de la liste avant ajout : " + bars.size());
         System.out.println(arr.toString());
         Bar bar; String address; String name; String latitude; String longitude;
@@ -151,7 +155,7 @@ public class GoogleBars {
             name = arr.getJSONObject(i).getString("name");
             latitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lat");
             longitude = arr.getJSONObject(i).getJSONObject("geometry").getJSONObject("location").getString("lng");
-            bar = new Bar((long)i, name, address, "", latitude, longitude);
+            bar = new Bar((long)i+(20*cpt), name, address, "", latitude, longitude);
             try{
                 String photoReference =  arr.getJSONObject(i).getJSONArray("photos").getJSONObject(0).getString("photo_reference");
                 bar.setUrl(DEBUT_URL_PHOTO_BAR + photoReference + FIN_URL_PHOTO_BAR);

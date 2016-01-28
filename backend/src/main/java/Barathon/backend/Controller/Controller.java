@@ -23,16 +23,19 @@ public class Controller {
 
     public List<Bar> getBars(){
 
-        EntityManagerFactory factory = Persistence
-                .createEntityManagerFactory("Backend");
+        /*EntityManagerFactory factory = Persistence
+                .createEntityManagerFactory("backend");
         EntityManager manager = factory.createEntityManager();
-        return BarDAO.getBars(manager);
+        return BarDAO.getBars(manager);*/
+        GoogleBars gb = new GoogleBars();
+        return gb.getBars();
     }
+
 
     public void miseAjour(){
         GoogleBars gb = new GoogleBars();
         List<Bar> bars = gb.getBars();
-        EntityManagerFactory factory = Persistence.createEntityManagerFactory("Backend");
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("backend");
         EntityManager manager = factory.createEntityManager();
 
         //View vue = new View(manager);

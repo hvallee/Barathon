@@ -16,6 +16,7 @@ public class Bar {
     private String longitude;
     private String url = URL_IMAGE_DE_BASE;
     private String description;
+    private static long cptforId = 0;
 
     public Bar() {
     }
