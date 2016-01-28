@@ -41,14 +41,9 @@
             android:paddingTop="5dp" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/parcours_bars_list"
-        android:layout_width="wrap_content"
-        android:layout_height="292dp"></ListView>
-
     <Button
         android:layout_width="165dp"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:text="Démarrer le Barathon"
         android:id="@+id/launchBarathon"
         android:layout_gravity="center_horizontal"
@@ -57,5 +52,11 @@
         android:textStyle="bold"
         android:textColor="#1e0606"
         android:padding="10dp" />
+
+    <ListView
+        android:id="@+id/parcours_bars_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/scroll_item"></ListView>
 
 </LinearLayout>

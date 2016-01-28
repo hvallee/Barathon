@@ -9,7 +9,7 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="411dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"

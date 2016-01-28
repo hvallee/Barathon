@@ -48,10 +48,10 @@ public class BarDetail extends FragmentActivity implements OnMapReadyCallback{
         // Get and Set the textarea
         vNom = (TextView) findViewById(R.id.NomBarDetail);
         vAdresse = (TextView) findViewById(R.id.AdresseBarDetail);
-        vNum = (TextView) findViewById(R.id.NumBarDetail);
+  //      vNum = (TextView) findViewById(R.id.NumBarDetail);
         vNom.setText(b.getName());
         vAdresse.setText(b.getAddress());
-        vNum.setText(b.getPhone());
+     //   vNum.setText(b.getPhone());
 
 
         // Get the map and call the getMapAsync, see onMapReady.
