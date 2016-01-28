@@ -11,6 +11,7 @@ import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ public class ParcoursDetail extends FragmentActivity implements OnMapReadyCallba
     private ListBarInsideAdapter adapter;
     private BarsDataSource dataSource;
     private List<Bar> barList;
+    private Button launchBarathon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +56,10 @@ public class ParcoursDetail extends FragmentActivity implements OnMapReadyCallba
         // On récup les éléments de la vue
         name = (TextView)findViewById(R.id.parcoursNameDetail);
         description = (TextView)findViewById(R.id.parcoursDescriptionDetail);
+        launchBarathon = (Button)findViewById(R.id.launchBarathon);
 
         // On recup l'id passé en extra dans l'intent
         long i = getIntent().getLongExtra("id", 0);
-
         // Initialisation de la source de donnée + recup du parcours grace l'id
         dataSource= new BarsDataSource(getBaseContext());
         dataSource.open();
@@ -90,10 +92,19 @@ public class ParcoursDetail extends FragmentActivity implements OnMapReadyCallba
             Toast.makeText(getApplicationContext(), "Il n'y a rien ici ! Rendez-vous sur la liste des bars pour en ajouter.", Toast.LENGTH_LONG).show();
         }
 
+        launchBarathon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), ParcoursLaunch.class);
+                intent.putExtra("id", getIntent().getLongExtra("id", 0));
+                startActivity(intent);
+            }
+        });
+/*
         // Get the map and call the getMapAsync, see onMapReady.
         MapFragment mapFragment = (MapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        mapFragment.getMapAsync(this);*/
         // Close du helper sqlite
         dataSource.close();
     }
@@ -127,7 +138,6 @@ public class ParcoursDetail extends FragmentActivity implements OnMapReadyCallba
 
         }
         googleMap.addPolyline(line);
-
-
     }
+
 }
