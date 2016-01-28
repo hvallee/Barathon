@@ -271,11 +271,11 @@ public class BarsDataSource {
         return bars;
     }
 
-    public void deleteParcours(Parcours parcours) {
+    public void deleteParcours(Long id) {
         // On commence par delete les lignes dans bars_parcours
-        database.delete(MySQLiteHelper.TABLE_BARS_PARCOURS, MySQLiteHelper.COLUMN_PARCOURS_ID + " = " + parcours.getId(), null);
+        database.delete(MySQLiteHelper.TABLE_BARS_PARCOURS, MySQLiteHelper.COLUMN_PARCOURS_ID + " = " + id, null);
         // Puis le parcours lui même
-        database.delete(MySQLiteHelper.TABLE_PARCOURS, MySQLiteHelper.COLUMN_ID_PARCOURS + " = " + parcours.getId(), null);
+        database.delete(MySQLiteHelper.TABLE_PARCOURS, MySQLiteHelper.COLUMN_ID_PARCOURS + " = " + id, null);
     }
 
     public int getNumberOfBar(int parcoursId){

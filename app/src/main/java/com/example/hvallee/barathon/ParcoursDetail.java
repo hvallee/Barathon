@@ -91,15 +91,18 @@ public class ParcoursDetail extends FragmentActivity implements OnMapReadyCallba
         if (barList.isEmpty()) {
             Toast.makeText(getApplicationContext(), "Il n'y a rien ici ! Rendez-vous sur la liste des bars pour en ajouter.", Toast.LENGTH_LONG).show();
         }
+        else {
+            launchBarathon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getApplication(), ParcoursLaunch.class);
+                    intent.putExtra("id", getIntent().getLongExtra("id", 0));
+                    startActivity(intent);
+                }
+            });
+        }
 
-        launchBarathon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), ParcoursLaunch.class);
-                intent.putExtra("id", getIntent().getLongExtra("id", 0));
-                startActivity(intent);
-            }
-        });
+
 /*
         // Get the map and call the getMapAsync, see onMapReady.
         MapFragment mapFragment = (MapFragment) getFragmentManager()

@@ -150,7 +150,6 @@ public class ParcoursLaunch extends FragmentActivity implements OnMapReadyCallba
 
     public void generateMap(GoogleMap googleMap) {
         googleMap.clear();
-        boolean first = true;
         PolylineOptions line = new PolylineOptions();
         line.color(Color.RED);
         int i = 0;
@@ -171,18 +170,14 @@ public class ParcoursLaunch extends FragmentActivity implements OnMapReadyCallba
                         .position(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())))
                         .title(b.getName())
                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-            }
-
-            line.add(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())));
-
-            if(first) {
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())), 15));
                 // Zoom in, animating the camera.
                 googleMap.animateCamera(CameraUpdateFactory.zoomIn());
                 // Zoom out to zoom level 10, animating with a duration of 2 seconds.
                 googleMap.animateCamera(CameraUpdateFactory.zoomTo(14), 1000, null);
-                first = false;
             }
+
+            line.add(new LatLng(Float.parseFloat(b.getLatitude()), Float.parseFloat(b.getLongitude())));
             i++;
         }
         googleMap.addPolyline(line);

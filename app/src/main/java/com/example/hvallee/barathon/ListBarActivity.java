@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.baoyz.widget.PullRefreshLayout;
 import com.example.hvallee.barathon.Adapter.ListBarAdapter;
@@ -59,7 +60,9 @@ public class ListBarActivity extends AppCompatActivity implements OnTaskComplete
         bars = dataSource.getAllBars();
         parcourses = dataSource.getAllParcours();
         dataSource.close();
-
+        if (parcourses.isEmpty()) {
+            Toast.makeText(getApplicationContext(), "Pour charger les bars, faite un mouvement de haut en bas avec votre index, puis relâchez", Toast.LENGTH_LONG).show();
+        }
         adapter = new ListBarAdapter(bars, this);
         listView.setAdapter(adapter);
         registerForContextMenu(listView);
