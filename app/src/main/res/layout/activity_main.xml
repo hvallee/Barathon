@@ -9,12 +9,11 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="411dp"
-        android:layout_height="wrap_content"
+        android:layout_width="400dp"
+        android:layout_height="150dp"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
-        android:background="@mipmap/logo_barathon"
-        android:layout_weight="0.22" />
+        android:background="@mipmap/logo_barathon" />
 
     <FrameLayout
         android:layout_width="match_parent"

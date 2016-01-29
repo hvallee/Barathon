@@ -1,12 +1,20 @@
 package com.example.hvallee.barathon;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.hvallee.barathon.Model.Bar;
 import com.melnykov.fab.FloatingActionButton;
 
 import com.example.hvallee.barathon.Adapter.ListParcoursAdapter;
@@ -19,7 +27,7 @@ public class ListParcoursActivity extends AppCompatActivity {
 
     private BarsDataSource dataSource;
     private ListView listView;
-    private FloatingActionButton floatAddButton;
+    private Button floatAddButton;
     private ListParcoursAdapter adapter;
     private List<Parcours> parcourses;
 
@@ -29,7 +37,7 @@ public class ListParcoursActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_parcours);
 
         listView = (ListView) findViewById(R.id.listViewParcours);
-        floatAddButton = (FloatingActionButton)findViewById(R.id.floatingAddButton);
+        floatAddButton = (Button)findViewById(R.id.addButton);
 
         // Masquer l'ActionBar
         View decorView = getWindow().getDecorView();
@@ -61,6 +69,34 @@ public class ListParcoursActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intentCreateParcours = new Intent(getApplicationContext(), CreateParcours.class);
                 startActivity(intentCreateParcours);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                //On recup l'id de l'élément cliqué
+                final long idParcours = parcourses.get(position).getId();
+                new AlertDialog.Builder(ListParcoursActivity.this)
+                        .setTitle("Suppression")
+                        .setMessage("Voulez-vous vraiment supprimer ce Barathon?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Parcours parcours = parcourses.get(position);
+                                dataSource.open();
+                                dataSource.deleteParcours(idParcours);
+                                dataSource.close();
+                                refresh();
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+                return false;
             }
         });
 
