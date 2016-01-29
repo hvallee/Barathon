@@ -113,8 +113,8 @@ public class ParcoursLaunch extends FragmentActivity implements OnMapReadyCallba
                 else if(currentStep == maxStep) {
                     new AlertDialog.Builder(ParcoursLaunch.this)
                             .setTitle("Barathon terminé !")
-                            .setMessage("Félicitations ! Vous avez terminé ce barathon ! N'hésitez pas à prendre une photo souvenir :)")
-                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            .setMessage("Félicitations ! Vous avez terminé ce barathon ! N'hésitez pas à prendre une photo souvenir ou à partager sur les réseaux sociaux :)")
+                            .setPositiveButton("Photo", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                                     startActivityForResult(intent, 0);
@@ -123,6 +123,16 @@ public class ParcoursLaunch extends FragmentActivity implements OnMapReadyCallba
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
+                                }
+                            })
+                            .setNeutralButton("Partager", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    String message = "J'ai complété le Barathon " + name + ". J'ai réussi à enchainer " + maxStep + " bars !";
+                                    Intent share = new Intent(Intent.ACTION_SEND);
+                                    share.setType("text/plain");
+                                    share.putExtra(Intent.EXTRA_TEXT, message);
+
+                                    startActivity(Intent.createChooser(share, "Title of the dialog the system will open"));
                                 }
                             })
                             .setIcon(android.R.drawable.ic_dialog_alert)
