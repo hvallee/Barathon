@@ -1,9 +1,13 @@
 package com.example.hvallee.barathon;
 
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -114,12 +118,16 @@ public class ParcoursLaunch extends FragmentActivity implements OnMapReadyCallba
                     new AlertDialog.Builder(ParcoursLaunch.this)
                             .setTitle("Barathon terminé !")
                             .setMessage("Félicitations ! Vous avez terminé ce barathon ! N'hésitez pas à prendre une photo souvenir ou à partager sur les réseaux sociaux :)")
-                            .setPositiveButton("Photo", new DialogInterface.OnClickListener() {
+                            /*.setPositiveButton("Photo", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                                    startActivityForResult(intent, 0);
+                                    if (hasPermissionInManifest(getApplicationContext(), "android.permission.CAMERA")){
+                                        startActivityForResult(intent, 0);
+                                    } else {
+                                        Toast.makeText(getApplicationContext(), "L'application ne dispose pas des droits.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            })
+                            })*/
                             .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // do nothing
@@ -127,7 +135,7 @@ public class ParcoursLaunch extends FragmentActivity implements OnMapReadyCallba
                             })
                             .setNeutralButton("Partager", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
-                                    String message = "J'ai complété le Barathon " + name + ". J'ai réussi à enchainer " + maxStep + " bars !";
+                                    String message = "J'ai complété le Barathon " + name.getText() + ". J'ai réussi à enchainer " + maxStep + " bars !";
                                     Intent share = new Intent(Intent.ACTION_SEND);
                                     share.setType("text/plain");
                                     share.putExtra(Intent.EXTRA_TEXT, message);
@@ -191,6 +199,25 @@ public class ParcoursLaunch extends FragmentActivity implements OnMapReadyCallba
             i++;
         }
         googleMap.addPolyline(line);
+    }
+
+    public boolean hasPermissionInManifest(Context context, String permissionName) {
+        final String packageName = context.getPackageName();
+        try {
+            final PackageInfo packageInfo = context.getPackageManager()
+                    .getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
+            final String[] declaredPermisisons = packageInfo.requestedPermissions;
+            if (declaredPermisisons != null && declaredPermisisons.length > 0) {
+                for (String p : declaredPermisisons) {
+                    if (p.equals(permissionName)) {
+                        return true;
+                    }
+                }
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
+        return false;
     }
 
 }

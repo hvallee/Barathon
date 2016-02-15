@@ -11,6 +11,7 @@ import com.example.hvallee.barathon.R;
  */
 public class ListBarActivity2 extends ListActivity {
 
+    // TEST
     private String[] mStrings = {
             "AAAAAAAA", "BBBBBBBB", "CCCCCCCC"
     };
