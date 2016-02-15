@@ -40,6 +40,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="hsqldb-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="hibernate-entitymanager-4.1.7.Final" level="project" />
     <orderEntry type="library" exported="" name="appengine-endpoints-1.9.18" level="project" />
     <orderEntry type="library" exported="" name="appengine-endpoints-deps-1.9.18" level="project" />
